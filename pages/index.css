@@ -6,6 +6,7 @@
 /* page */
 
 @import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/header/__img/header__img.css);
 /* header */
 
@@ -41,5 +42,3 @@
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__close/popup__close.css);
-@import url(..);
-@import url(..);

@@ -1,16 +1,5 @@
 .header__img {
-  width: calc(6.79% + 82px);
-  padding: 45px 0 41px 0;
-}
-
-@media screen and (max-width: 934px) {
-  .header__img {
-    padding-left: 27px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .header__img {
-    padding: 28px 0 32px 27px;
-  }
+  color: white;
+  width: 100%;
+  object-fit: cover;
 }

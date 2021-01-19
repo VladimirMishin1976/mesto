@@ -6,7 +6,7 @@
   color: #000000;
   width: calc(100% - 2 * 36px);
   margin: 0;
-  padding-bottom: 54px;
+  padding-bottom: 47px;
 }
 
 @media screen and (max-width: 660px) {

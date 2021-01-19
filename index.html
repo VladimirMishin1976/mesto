@@ -10,30 +10,21 @@
 
 <body class="page">
   <header class="header">
-    <img class="header__img" src="./images/header__logo.svg" alt="Логотип. Место.">
+    <a class="header__logo" href="#" target="_self">
+      <img class="header__img" src="./images/header__logo.svg" alt="Логотип. Место.">
+    </a>
   </header>
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="Жак-Ив Кусто">
+      <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="Аватар пользователя">
 
       <div class="profile__container">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button" type="button"></button>
+        <button class="profile__edit-button" type="button" aria-label="Закрыть"></button>
         <p class="profile__subtitle">Исследователь океана</p>
       </div>
 
-      <button class="profile__add-button" type="button"></button>
-
-      <div class="popup">
-        <form class="popup__container">
-          <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-
-          <input class="popup__input" type="text" placeholder="Имечко" name="nameProfile" required>
-          <input class="popup__input" type="text" placeholder="Работочка" name="jobProfile" required>
-          <button class="popup__save" type="submit">Сохранить</button>
-          <button class="popup__close" type="button"></button>
-        </form>
-      </div>
+      <button class="profile__add-button" type="button" aria-label="Добавить фото"></button>
     </section>
 
     <section class="cards">
@@ -42,28 +33,28 @@
           <img src="./images/card__vologda.jpg" alt="Вологда" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Вологда</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
         <li class="card">
           <img src="./images/card__altai.jpg" alt="Алтай" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Алтай</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
         <li class="card">
           <img src="./images/card__dombai.jpg" alt="Донбай" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Донбай</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
         <li class="card">
           <img src="./images/card__elbrus.jpg" alt="Эльбрус" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Эльбрус</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
         <li class="card">
@@ -71,14 +62,14 @@
             Карачаево-Черкесия" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Карачаево-Черкесия</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
         <li class="card">
           <img src="./images/card__sahalin.jpg" alt="Сахалин" class="card__image">
           <div class="card__contain">
             <h3 class="card__caption">Сахалин</h3>
-            <button class="card__like"></button>
+            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
           </div>
         </li>
       </ul>
@@ -87,8 +78,18 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
   </footer>
+<!-- Попап - профиль -->
+  <article class="popup">
+    <form class="popup__container" name="editProfile">
+      <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
+      <input class="popup__input popup__input_name" type="text" placeholder="Имя" name="nameProfile" required>
+      <input class="popup__input popup__input_job" type="text" placeholder="Работа" name="jobProfile" required>
+      <button class="popup__save" type="submit">Сохранить</button>
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+    </form>
+  </article>
 
-  <script src="./script.js"></script>
+  <script src="./scripts/script.js"></script>
 </body>
 
 </html>

@@ -12,11 +12,13 @@
   border: none;
   border-radius: 2px;
   transition: .11s linear;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 660px) {
   .popup__save {
     width: calc(100% - 44px);
+    height: 46px;
     font-size: 14px;
     margin-top: 45px;
   }
