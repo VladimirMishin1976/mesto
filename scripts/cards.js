@@ -34,7 +34,12 @@ const popupAddCard = page.querySelector('.popup_add-card');
 const buttonAddCard = page.querySelector('.profile__add-button');
 // Кнопка закрыть попап добавления карточки
 const buttonCloseAddCard = page.querySelector('.popup__close_add-card');
+// Поля ввода попап добавления карточки
+const formAddCard = document.forms['add-place'];
+const inputCardTitle = formAddCard.elements['tittle-place'];
+const inputCardImage = formAddCard.elements['link-img-place'];
 
+// function popupToggle() - в файле profile.js
 
 // Добавить карточку места с фото
 function addCard(item) {
@@ -44,13 +49,23 @@ function addCard(item) {
   card.querySelector('.card__caption').textContent = item['name'];
   cardList.prepend(card);
 }
+// Кнопка добавить карточку введеную в попап карточку
+function handleAddCardSubmit(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  const cardArguments = {};
+  cardArguments.name = inputCardTitle.value;
+  cardArguments.link = inputCardImage.value;
+  addCard(cardArguments);
+  popupToggle(popupAddCard);
+}
 
-// function popupToggle() - в файле profile.js
+
 
 // Добавление карточек из массива
 initialCards.forEach(addCard);
-
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => popupToggle(popupAddCard));
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => popupToggle(popupAddCard));
+// Событие submit на попап Создать карточку
+formAddCard.addEventListener('submit', handleAddCardSubmit);
