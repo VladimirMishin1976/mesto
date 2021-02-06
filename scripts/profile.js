@@ -2,7 +2,7 @@ const page = document.querySelector('.page');
 
 // Попап редактирования профиля
 const popupProfile = page.querySelector('.popup_profile');
-const popupClose = page.querySelector('.popup__close_profile');
+const buttonCloseProfileEdit = page.querySelector('.popup__close_profile');
 const formProfile = document.forms['edit-profile'];
 const nameInput = formProfile.elements['name-profile'];
 const jobInput = formProfile.elements['job-profile'];
@@ -41,7 +41,7 @@ function handleFormSubmit(evt) {
 buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
 // закрытие окна редактирования профиля
-popupClose.addEventListener('click', () => popupToggle(popupProfile));
+buttonCloseProfileEdit.addEventListener('click', () => popupToggle(popupProfile));
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»

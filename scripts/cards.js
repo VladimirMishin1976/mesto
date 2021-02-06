@@ -32,6 +32,8 @@ const templateCard = page.querySelector('.template-card').content;
 const popupAddCard = page.querySelector('.popup_add-card');
 // кнопка добавить карточку
 const buttonAddCard = page.querySelector('.profile__add-button');
+// Кнопка закрыть попап добавления карточки
+const buttonCloseAddCard = page.querySelector('.popup__close_add-card');
 
 
 // Добавить карточку места с фото
@@ -50,3 +52,5 @@ initialCards.forEach(addCard);
 
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => popupToggle(popupAddCard));
+// Кнопка закрыть попап добавления карточки
+buttonCloseAddCard.addEventListener('click', () => popupToggle(popupAddCard));
