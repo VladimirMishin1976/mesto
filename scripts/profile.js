@@ -10,11 +10,11 @@ const jobInput = formProfile.elements['job-profile'];
 // профиль
 const profileTitle = page.querySelector('.profile__title');
 const jobProfile = page.querySelector('.profile__subtitle');
-const profileEditButton = page.querySelector('.profile__edit-button');
+const buttonProfileEdit = page.querySelector('.profile__edit-button');
 
 
 // функция скрыть/открыть popup
-function popupProfileToggle(popup) {
+function popupToggle(popup) {
   popup.classList.toggle('popup_opened');
 }
 
@@ -22,7 +22,7 @@ function popupProfileToggle(popup) {
 function popupSaveOpen() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
-  popupProfileToggle(popupProfile);
+  popupToggle(popupProfile);
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -34,14 +34,14 @@ function handleFormSubmit(evt) {
   // Вставьте новые значения с помощью textContent
   profileTitle.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  popupProfileToggle(popupProfile);
+  popupToggle(popupProfile);
 }
 
 // кнопка открытие окна редактирования профиля
-profileEditButton.addEventListener('click', popupSaveOpen);
+buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
 // закрытие окна редактирования профиля
-popupClose.addEventListener('click', () => popupProfileToggle(popupProfile));
+popupClose.addEventListener('click', () => popupToggle(popupProfile));
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
