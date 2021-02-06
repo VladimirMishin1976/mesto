@@ -14,7 +14,7 @@ const buttonProfileEdit = page.querySelector('.profile__edit-button');
 
 
 // функция скрыть/открыть popup
-function popupToggle(popup) {
+function togglePopup (popup) {
   popup.classList.toggle('popup_opened');
 }
 
@@ -22,7 +22,7 @@ function popupToggle(popup) {
 function popupSaveOpen() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
-  popupToggle(popupProfile);
+  togglePopup (popupProfile);
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -34,14 +34,14 @@ function handleFormSubmit(evt) {
   // Вставьте новые значения с помощью textContent
   profileTitle.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  popupToggle(popupProfile);
+  togglePopup (popupProfile);
 }
 
 // кнопка открытие окна редактирования профиля
 buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
 // закрытие окна редактирования профиля
-buttonCloseProfileEdit.addEventListener('click', () => popupToggle(popupProfile));
+buttonCloseProfileEdit.addEventListener('click', () => togglePopup (popupProfile));
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»

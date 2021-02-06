@@ -1,4 +1,4 @@
-// Cards
+// Cards Массив начальной загрузки
 const initialCards = [
   {
     name: 'Пенза',
@@ -25,9 +25,8 @@ const initialCards = [
     link: 'https://360tv.ru/media/images/articles/cover/72ef513b-2d22-4265-8b57-0cf2b9e7913a/3d-surreal-mars-style-landscape_1048-9878.jpg'
   }
 ];
-// Карточки
+// Карточки шаблон
 const templateCard = page.querySelector('.template-card').content;
-
 // Попап добавления карточки
 const popupAddCard = page.querySelector('.popup_add-card');
 // кнопка добавить карточку
@@ -39,7 +38,9 @@ const formAddCard = document.forms['add-place'];
 const inputCardTitle = formAddCard.elements['tittle-place'];
 const inputCardImage = formAddCard.elements['link-img-place'];
 
-// function popupToggle() - в файле profile.js
+
+// Функции ---------------------------------------------------------------------------------------------------------------------------
+// function togglePopup() - в файле profile.js
 
 // Добавить карточку места с фото
 function addCard(item) {
@@ -47,6 +48,8 @@ function addCard(item) {
   const card = templateCard.querySelector('.card').cloneNode(true);
   card.querySelector('.card__image').src = item['link'];
   card.querySelector('.card__caption').textContent = item['name'];
+  const likeIcon = card.querySelector('.card__like'); // Реагирование на кнопку лайк
+  likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
   cardList.prepend(card);
 }
 // Кнопка добавить карточку введеную в попап карточку
@@ -56,16 +59,15 @@ function handleAddCardSubmit(evt) {
   cardArguments.name = inputCardTitle.value;
   cardArguments.link = inputCardImage.value;
   addCard(cardArguments);
-  popupToggle(popupAddCard);
+  togglePopup(popupAddCard);
 }
-
-
-
+// ---------------------------------------------------------------------------------------------------------------------------
 // Добавление карточек из массива
 initialCards.forEach(addCard);
 // Открытие окна добавления карточки
-buttonAddCard.addEventListener('click', () => popupToggle(popupAddCard));
+buttonAddCard.addEventListener('click', () => togglePopup(popupAddCard));
 // Кнопка закрыть попап добавления карточки
-buttonCloseAddCard.addEventListener('click', () => popupToggle(popupAddCard));
+buttonCloseAddCard.addEventListener('click', () => togglePopup(popupAddCard));
 // Событие submit на попап Создать карточку
 formAddCard.addEventListener('submit', handleAddCardSubmit);
+
