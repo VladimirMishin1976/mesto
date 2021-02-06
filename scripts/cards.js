@@ -48,9 +48,17 @@ function addCard(item) {
   const card = templateCard.querySelector('.card').cloneNode(true);
   card.querySelector('.card__image').src = item['link'];
   card.querySelector('.card__caption').textContent = item['name'];
-  const likeIcon = card.querySelector('.card__like'); // Реагирование на кнопку лайк
+  cardList.prepend(card);
+  // Реагирование на кнопку лайк
+  const likeIcon = card.querySelector('.card__like');
   likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
   cardList.prepend(card);
+  // Корзина
+  const trashCard = page.querySelector('.card__trash');
+  trashCard.addEventListener('click', function() {
+    card.remove();
+  });
+
 }
 // Кнопка добавить карточку введеную в попап карточку
 function handleAddCardSubmit(evt) {

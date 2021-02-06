@@ -9,7 +9,7 @@
   border: none;
   min-width: 22px;
   min-height: 19px;
-  transition: opacity .1s;
+  transition: opacity .15s;
   cursor: pointer;
 }
 
@@ -29,7 +29,4 @@
   outline: none;
 }
 
-.card__like:focus:hover {
-  opacity: 1;
-}
 
