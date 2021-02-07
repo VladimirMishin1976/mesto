@@ -55,10 +55,9 @@ function addCard(item) {
   cardList.prepend(card);
   // Корзина
   const trashCard = page.querySelector('.card__trash');
-  trashCard.addEventListener('click', function() {
+  trashCard.addEventListener('click', function () {
     card.remove();
   });
-
 }
 // Кнопка добавить карточку введеную в попап карточку
 function handleAddCardSubmit(evt) {
