@@ -1,29 +1,32 @@
-let page = document.querySelector('.page');
+const page = document.querySelector('.page');
 
-let popup = page.querySelector('.popup');
-let popupClose = page.querySelector('.popup__close');
-let formElement = page.querySelector('.popup__container');
-let nameInput = page.querySelector('.popup__input_name');
-let jobInput = page.querySelector('.popup__input_job');
+// Попап редактирования профиля
+const popupProfile = page.querySelector('.popup_place_profile');
+const buttonCloseProfileEdit = page.querySelector('.popup__close_profile');
+const formProfile = document.forms['edit-profile'];
+const nameInput = formProfile.elements['name-profile'];
+const jobInput = formProfile.elements['job-profile'];
 
-let profileTitle = page.querySelector('.profile__title');
-let jobProfile = page.querySelector('.profile__subtitle');
-let profileEditButton = page.querySelector('.profile__edit-button');
+// профиль
+const profileTitle = page.querySelector('.profile__title');
+const jobProfile = page.querySelector('.profile__subtitle');
+const buttonProfileEdit = page.querySelector('.profile__edit-button');
+
 
 // функция скрыть/открыть popup
-function popupToggle() {
+function togglePopup (popup) {
   popup.classList.toggle('popup_opened');
 }
 
 // заполнение форм редактирования профиля содержимым при открытии формы редактирования профиля
-function popupSave() {
+function popupSaveOpen() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
-  popupToggle();
+  togglePopup (popupProfile);
 }
 
 // Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
+// она никуда отправляться не будет'
 function handleFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
@@ -31,17 +34,18 @@ function handleFormSubmit(evt) {
   // Вставьте новые значения с помощью textContent
   profileTitle.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  popupToggle();
+  togglePopup (popupProfile);
 }
 
 // кнопка открытие окна редактирования профиля
-profileEditButton.addEventListener('click', popupSave);
+buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
 // закрытие окна редактирования профиля
-popupClose.addEventListener('click', popupToggle);
+buttonCloseProfileEdit.addEventListener('click', () => togglePopup (popupProfile));
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleFormSubmit);
+formProfile.addEventListener('submit', handleFormSubmit);
+
 
 

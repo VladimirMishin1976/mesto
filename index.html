@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Жак-Ив Кусто</title>
   <link rel="stylesheet" href="./pages/index.css">
+  <script src="./scripts/profile.js" defer></script>
+  <script src="./scripts/cards.js" defer></script>
+
 </head>
 
 <body class="page">
@@ -29,67 +32,57 @@
 
     <section class="cards">
       <ul class="cards__list">
-        <li class="card">
-          <img src="./images/card__vologda.jpg" alt="Вологда" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Вологда</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/card__altai.jpg" alt="Алтай" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Алтай</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/card__dombai.jpg" alt="Донбай" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Донбай</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/card__elbrus.jpg" alt="Эльбрус" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Эльбрус</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/card__karachaevsk.jpg" alt="
-            Карачаево-Черкесия" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Карачаево-Черкесия</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="./images/card__sahalin.jpg" alt="Сахалин" class="card__image">
-          <div class="card__contain">
-            <h3 class="card__caption">Сахалин</h3>
-            <button class="card__like" type="button" aria-label="Лайкнуть"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
   </footer>
-<!-- Попап - профиль -->
-  <article class="popup">
-    <form class="popup__container" name="editProfile">
+
+  <!-- Попап - профиль -->
+  <article class="popup popup_place_profile">
+    <form class="popup__container" name="edit-profile">
       <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-      <input class="popup__input popup__input_name" type="text" placeholder="Имя" name="nameProfile" required>
-      <input class="popup__input popup__input_job" type="text" placeholder="Работа" name="jobProfile" required>
+      <input class="popup__input" type="text" placeholder="Имя" name="name-profile" required>
+      <input class="popup__input" type="text" placeholder="Работа" name="job-profile" required>
       <button class="popup__save" type="submit">Сохранить</button>
-      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
     </form>
   </article>
 
-  <script src="./scripts/script.js"></script>
+  <!-- Попап - Добавление картчки -->
+  <article class="popup popup_place_add-card">
+    <form class="popup__container" name="add-place">
+      <h2 class="popup__title">Новое место</h2>
+      <input class="popup__input" type="text" placeholder="Название" name="tittle-place" required>
+      <input class="popup__input" type="url" placeholder="Ссылка на картинку" name="link-img-place" required>
+      <button class="popup__save" type="submit">Создать</button>
+      <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
+    </form>
+  </article>
+
+
+  <!-- шаблон карточки -->
+  <template class="template-card">
+    <li class="card">
+      <img src="" alt="" class="card__image">
+      <div class="card__contain">
+        <h3 class="card__caption"></h3>
+        <button class="card__like" type="button" aria-label="Лайкнуть"></button>
+        <button class="card__trash" type="button" aria-label="Удалить"></button>
+      </div>
+      <!-- Попап - Показать картинку -->
+      <div class="popup popup_place_img">
+        <div class="popup__img-container">
+          <img class="popup__img">
+          <p class="popup__img-caption"></p>
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        </div>
+      </div>
+    </li>
+  </template>
+
 </body>
 
 </html>
