@@ -28,7 +28,7 @@ const initialCards = [
 // Карточки шаблон
 const templateCard = page.querySelector('.template-card').content;
 // Попап добавления карточки
-const popupAddCard = page.querySelector('.popup_add-card');
+const popupAddCard = page.querySelector('.popup_place_add-card');
 // кнопка добавить карточку
 const buttonAddCard = page.querySelector('.profile__add-button');
 // Кнопка закрыть попап добавления карточки
@@ -46,18 +46,30 @@ const inputCardImage = formAddCard.elements['link-img-place'];
 function addCard(item) {
   const cardList = page.querySelector('.cards__list');
   const card = templateCard.querySelector('.card').cloneNode(true);
-  card.querySelector('.card__image').src = item['link'];
+  const imageCard = card.querySelector('.card__image');
+  imageCard.alt = item['name'];
+  imageCard.src = item['link'];
   card.querySelector('.card__caption').textContent = item['name'];
-  cardList.prepend(card);
+
+  // Попап картинки
+  const popupImage = card.querySelector('.popup_place_img');
+  const buttonCloseImage = card.querySelector('.popup__close');
+  card.querySelector('.popup__img').src = item['link'];
+  card.querySelector('.popup__img').alt = item['name'];
+  card.querySelector('.popup__img-caption').textContent = item['name'];
+  imageCard.addEventListener('click', () => togglePopup(popupImage));
+  buttonCloseImage.addEventListener('click', () => togglePopup(popupImage));
   // Реагирование на кнопку лайк
   const likeIcon = card.querySelector('.card__like');
   likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
   cardList.prepend(card);
+
   // Корзина
   const trashCard = page.querySelector('.card__trash');
   trashCard.addEventListener('click', function () {
     card.remove();
   });
+  cardList.prepend(card);
 }
 // Кнопка добавить карточку введеную в попап карточку
 function handleAddCardSubmit(evt) {

@@ -1,7 +1,7 @@
 const page = document.querySelector('.page');
 
 // Попап редактирования профиля
-const popupProfile = page.querySelector('.popup_profile');
+const popupProfile = page.querySelector('.popup_place_profile');
 const buttonCloseProfileEdit = page.querySelector('.popup__close_profile');
 const formProfile = document.forms['edit-profile'];
 const nameInput = formProfile.elements['name-profile'];

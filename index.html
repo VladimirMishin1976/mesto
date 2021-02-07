@@ -41,7 +41,7 @@
   </footer>
 
   <!-- Попап - профиль -->
-  <article class="popup popup_profile">
+  <article class="popup popup_place_profile">
     <form class="popup__container" name="edit-profile">
       <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
       <input class="popup__input" type="text" placeholder="Имя" name="name-profile" required>
@@ -52,7 +52,7 @@
   </article>
 
   <!-- Попап - Добавление картчки -->
-  <article class="popup popup_add-card">
+  <article class="popup popup_place_add-card">
     <form class="popup__container" name="add-place">
       <h2 class="popup__title">Новое место</h2>
       <input class="popup__input" type="text" placeholder="Название" name="tittle-place" required>
@@ -62,6 +62,7 @@
     </form>
   </article>
 
+
   <!-- шаблон карточки -->
   <template class="template-card">
     <li class="card">
@@ -70,6 +71,14 @@
         <h3 class="card__caption"></h3>
         <button class="card__like" type="button" aria-label="Лайкнуть"></button>
         <button class="card__trash" type="button" aria-label="Удалить"></button>
+      </div>
+      <!-- Попап - Показать картинку -->
+      <div class="popup popup_place_img">
+        <div class="popup__img-container">
+          <img class="popup__img">
+          <p class="popup__img-caption"></p>
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        </div>
       </div>
     </li>
   </template>
