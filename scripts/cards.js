@@ -10,55 +10,76 @@ const buttonCloseAddCard = page.querySelector('.popup__close_add-card');
 const formAddCard = document.forms['add-place'];
 const inputCardTitle = formAddCard.elements['tittle-place'];
 const inputCardImage = formAddCard.elements['link-img-place'];
+// Список карточек
+const cardList = page.querySelector('.cards__list');
+// Переменные попапа картинки карточки
+const popupCard = page.querySelector('.popup_place_img');
+const popupCardImage = popupCard.querySelector('.popup__img');
+const popupCardCaption = popupCard.querySelector('.popup__img-caption');
+const popupCardClose = popupCard.querySelector('.popup__close');
+
 
 
 // Функции ---------------------------------------------------------------------------------------------------------------------------
 // function openPopup() и closePopup- в файле profile.js
 
-// Добавить карточку места с фото
-function addCard(item) {
-  const cardList = page.querySelector('.cards__list');
+// Создать карточку места с фото
+function createCard(item) {
   const card = templateCard.querySelector('.card').cloneNode(true);
   const imageCard = card.querySelector('.card__image');
+  const captionCard = card.querySelector('.card__caption');
   imageCard.alt = item['name'];
   imageCard.src = item['link'];
-  card.querySelector('.card__caption').textContent = item['name'];
-
-  // Попап картинки
-  const popupImage = card.querySelector('.popup_place_img');
-  const buttonCloseImage = card.querySelector('.popup__close');
-  card.querySelector('.popup__img').src = item['link'];
-  card.querySelector('.popup__img').alt = item['name'];
-  card.querySelector('.popup__img-caption').textContent = item['name'];
-  imageCard.addEventListener('click', () => openPopup(popupImage));
-  buttonCloseImage.addEventListener('click', () => closePopup(popupImage));
+  captionCard.textContent = item['name'];
+  // Открыть попап картинки (клик по картинке карточки)
+  imageCard.addEventListener('click', handlePopupImageCard);
   // Реагирование на кнопку лайк
   const likeIcon = card.querySelector('.card__like');
   likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
-  cardList.prepend(card);
-
   // Корзина
-  const trashCard = page.querySelector('.card__trash');
-  trashCard.addEventListener('click', function () {
-    card.remove();
-  });
-  cardList.prepend(card);
+  const trashCard = card.querySelector('.card__trash');
+  trashCard.addEventListener('click', function () { card.remove(); });
+  return card;
 }
-// Кнопка добавить карточку введеную в попап карточку
+
+// Добавить карточку
+function addCardToCardList(item) {
+  cardList.prepend(createCard(item));
+}
+
+// Открытие попапа увеличенной картинки при клике на картинку карточки
+function handlePopupImageCard(evt) {
+  // Переменные карточки
+  const imageCard = evt.target;
+  const card = imageCard.closest('.card');
+  const captionCard = card.querySelector('.card__caption');
+  popupCardImage.src = imageCard.src;
+  popupCardImage.alt = imageCard.alt;
+  popupCardCaption.textContent = captionCard.textContent;
+  openPopup(popupCard);
+}
+
+// Кнопка добавить карточку введеную в попап карточку - открытие попапа
 function handleAddCardSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   const cardArguments = {};
   cardArguments.name = inputCardTitle.value;
   cardArguments.link = inputCardImage.value;
-  addCard(cardArguments);
+  addCardToCardList(cardArguments);
   closePopup(popupAddCard);
+  formAddCard.reset();
 }
+
 // ---------------------------------------------------------------------------------------------------------------------------
 // Добавление карточек из массива
-initialCards.forEach(addCard);
+initialCards.forEach(addCardToCardList);
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => closePopup(popupAddCard));
 // Событие submit на попап Создать карточку
 formAddCard.addEventListener('submit', handleAddCardSubmit);
+// Закрыть попап картинки карточки
+popupCardClose.addEventListener('click', () => closePopup(popupCard));
+
+
