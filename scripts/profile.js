@@ -13,39 +13,40 @@ const jobProfile = page.querySelector('.profile__subtitle');
 const buttonProfileEdit = page.querySelector('.profile__edit-button');
 
 
-// функция скрыть/открыть popup
-function togglePopup (popup) {
-  popup.classList.toggle('popup_opened');
+// функция скрыть popup
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+// функция открыть popup
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-// заполнение форм редактирования профиля содержимым при открытии формы редактирования профиля
+// открытие и заполнение форм редактирования профиля содержимым
 function popupSaveOpen() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
-  togglePopup (popupProfile);
+  openPopup(popupProfile);
 }
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет'
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
   // Выберите элементы, куда должны быть вставлены значения полей
   // Вставьте новые значения с помощью textContent
   profileTitle.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  togglePopup (popupProfile);
+  closePopup(popupProfile);
 }
 
 // кнопка открытие окна редактирования профиля
 buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
 // закрытие окна редактирования профиля
-buttonCloseProfileEdit.addEventListener('click', () => togglePopup (popupProfile));
+buttonCloseProfileEdit.addEventListener('click', () => closePopup(popupProfile));
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formProfile.addEventListener('submit', handleFormSubmit);
-
-
-
+formProfile.addEventListener('submit', handleProfileFormSubmit);

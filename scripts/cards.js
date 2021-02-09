@@ -1,30 +1,3 @@
-// Cards Массив начальной загрузки
-const initialCards = [
-  {
-    name: 'Пенза',
-    link: 'https://riapo.ru/upload/0penza/Beliakov/2407-5.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Марс',
-    link: 'https://360tv.ru/media/images/articles/cover/72ef513b-2d22-4265-8b57-0cf2b9e7913a/3d-surreal-mars-style-landscape_1048-9878.jpg'
-  }
-];
 // Карточки шаблон
 const templateCard = page.querySelector('.template-card').content;
 // Попап добавления карточки
@@ -40,7 +13,7 @@ const inputCardImage = formAddCard.elements['link-img-place'];
 
 
 // Функции ---------------------------------------------------------------------------------------------------------------------------
-// function togglePopup() - в файле profile.js
+// function openPopup() и closePopup- в файле profile.js
 
 // Добавить карточку места с фото
 function addCard(item) {
@@ -57,8 +30,8 @@ function addCard(item) {
   card.querySelector('.popup__img').src = item['link'];
   card.querySelector('.popup__img').alt = item['name'];
   card.querySelector('.popup__img-caption').textContent = item['name'];
-  imageCard.addEventListener('click', () => togglePopup(popupImage));
-  buttonCloseImage.addEventListener('click', () => togglePopup(popupImage));
+  imageCard.addEventListener('click', () => openPopup(popupImage));
+  buttonCloseImage.addEventListener('click', () => closePopup(popupImage));
   // Реагирование на кнопку лайк
   const likeIcon = card.querySelector('.card__like');
   likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
@@ -78,15 +51,14 @@ function handleAddCardSubmit(evt) {
   cardArguments.name = inputCardTitle.value;
   cardArguments.link = inputCardImage.value;
   addCard(cardArguments);
-  togglePopup(popupAddCard);
+  closePopup(popupAddCard);
 }
 // ---------------------------------------------------------------------------------------------------------------------------
 // Добавление карточек из массива
 initialCards.forEach(addCard);
 // Открытие окна добавления карточки
-buttonAddCard.addEventListener('click', () => togglePopup(popupAddCard));
+buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
 // Кнопка закрыть попап добавления карточки
-buttonCloseAddCard.addEventListener('click', () => togglePopup(popupAddCard));
+buttonCloseAddCard.addEventListener('click', () => closePopup(popupAddCard));
 // Событие submit на попап Создать карточку
 formAddCard.addEventListener('submit', handleAddCardSubmit);
-

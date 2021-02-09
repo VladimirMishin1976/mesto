@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Жак-Ив Кусто</title>
   <link rel="stylesheet" href="./pages/index.css">
+  <script src="./scripts/initial-card.js" defer></script>
   <script src="./scripts/profile.js" defer></script>
   <script src="./scripts/cards.js" defer></script>
-
 </head>
 
 <body class="page">
@@ -62,6 +62,14 @@
     </form>
   </article>
 
+  <!-- Попап - Показать картинку -->
+  <div class="popup popup_place_img">
+    <div class="popup__img-container">
+      <img class="popup__img" alt="Здесь должно быть изображение" src="./images/profile__avatar.jpg">
+      <p class="popup__img-caption"></p>
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+    </div>
+  </div>
 
   <!-- шаблон карточки -->
   <template class="template-card">
@@ -72,14 +80,7 @@
         <button class="card__like" type="button" aria-label="Лайкнуть"></button>
         <button class="card__trash" type="button" aria-label="Удалить"></button>
       </div>
-      <!-- Попап - Показать картинку -->
-      <div class="popup popup_place_img">
-        <div class="popup__img-container">
-          <img class="popup__img">
-          <p class="popup__img-caption"></p>
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        </div>
-      </div>
+
     </li>
   </template>
 
