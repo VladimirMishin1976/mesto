@@ -62,9 +62,8 @@ function handlePopupImageCard(evt) {
 // Кнопка добавить карточку введеную в попап карточку - открытие попапа
 function handleAddCardSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const cardArguments = {};
-  cardArguments.name = inputCardTitle.value;
-  cardArguments.link = inputCardImage.value;
+  const cardArguments = { name: inputCardTitle.value, link: inputCardImage.value };
+
   addCardToCardList(cardArguments);
   closePopup(popupAddCard);
   formAddCard.reset();
