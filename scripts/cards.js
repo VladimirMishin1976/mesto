@@ -66,7 +66,6 @@ function handleAddCardSubmit(evt) {
 
   addCardToCardList(cardArguments);
   closePopup(popupAddCard);
-  formAddCard.reset();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +73,8 @@ function handleAddCardSubmit(evt) {
 initialCards.forEach(addCardToCardList);
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => {
+  closePopupEscape(popupAddCard);
+  formAddCard.reset();
   openPopup(popupAddCard);
   inputCardTitle.dispatchEvent(new Event('input'));
   inputCardImage.dispatchEvent(new Event('input'));
@@ -81,7 +82,6 @@ buttonAddCard.addEventListener('click', () => {
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => {
   closePopup(popupAddCard)
-  formAddCard.reset();
 });
 // Событие submit на попап Создать карточку
 formAddCard.addEventListener('submit', handleAddCardSubmit);

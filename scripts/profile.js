@@ -29,6 +29,16 @@ function popupSaveOpen() {
   nameInput.dispatchEvent(new Event('input'));
   jobInput.dispatchEvent(new Event('input'));
   openPopup(popupProfile);
+  closePopupEscape(popupProfile);
+}
+
+// закрыть попап кнопкой Escape
+const closePopupEscape = (popup) => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -43,6 +53,9 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfile);
 }
 
+
+// --------------------------------------------------------------------------------------------------------------------------------
+
 // кнопка открытие окна редактирования профиля
 buttonProfileEdit.addEventListener('click', popupSaveOpen);
 
@@ -53,9 +66,10 @@ buttonCloseProfileEdit.addEventListener('click', () => closePopup(popupProfile))
 // он будет следить за событием “submit” - «отправка»
 formProfile.addEventListener('submit', handleProfileFormSubmit);
 
-//  Закрыть ЛЮБОЙ попап по клику на оверлей
+//  Закрыть любой попап по клику на оверлей
 page.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
 });
+
