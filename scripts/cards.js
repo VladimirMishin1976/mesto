@@ -73,12 +73,20 @@ function handleAddCardSubmit(evt) {
 // Добавление карточек из массива
 initialCards.forEach(addCardToCardList);
 // Открытие окна добавления карточки
-buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
+buttonAddCard.addEventListener('click', () => {
+  openPopup(popupAddCard);
+  inputCardTitle.dispatchEvent(new Event('input'));
+  inputCardImage.dispatchEvent(new Event('input'));
+});
 // Кнопка закрыть попап добавления карточки
-buttonCloseAddCard.addEventListener('click', () => closePopup(popupAddCard));
+buttonCloseAddCard.addEventListener('click', () => {
+  closePopup(popupAddCard)
+  formAddCard.reset();
+});
 // Событие submit на попап Создать карточку
 formAddCard.addEventListener('submit', handleAddCardSubmit);
 // Закрыть попап картинки карточки
 popupCardClose.addEventListener('click', () => closePopup(popupCard));
+
 
 

@@ -26,6 +26,8 @@ function openPopup(popup) {
 function popupSaveOpen() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
+  nameInput.dispatchEvent(new Event('input'));
+  jobInput.dispatchEvent(new Event('input'));
   openPopup(popupProfile);
 }
 

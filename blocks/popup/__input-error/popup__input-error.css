@@ -7,4 +7,5 @@
   color: #ff0000;
   opacity: 0;
   transition: .15s;
+  min-height: 15px;
 }
