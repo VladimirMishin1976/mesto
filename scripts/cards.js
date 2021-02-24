@@ -88,5 +88,3 @@ formAddCard.addEventListener('submit', handleAddCardSubmit);
 // Закрыть попап картинки карточки
 popupCardClose.addEventListener('click', () => closePopup(popupCard));
 
-
-

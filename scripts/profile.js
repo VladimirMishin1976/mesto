@@ -52,3 +52,10 @@ buttonCloseProfileEdit.addEventListener('click', () => closePopup(popupProfile))
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formProfile.addEventListener('submit', handleProfileFormSubmit);
+
+//  Закрыть ЛЮБОЙ попап по клику на оверлей
+page.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+});
