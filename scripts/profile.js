@@ -12,7 +12,6 @@ const profileTitle = page.querySelector('.profile__title');
 const jobProfile = page.querySelector('.profile__subtitle');
 const buttonProfileEdit = page.querySelector('.profile__edit-button');
 
-
 // функция скрыть popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -20,27 +19,34 @@ function closePopup(popup) {
 // функция открыть popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  closePopupClickOverlay(popup);
 }
-
+//  Закрыть попап по клику на оверлей
+const closePopupClickOverlay = (popup) => { // Есть ли смысл в отдельной функции или лучше слушатель сразу в openPopup???
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+}
 // открытие и заполнение форм редактирования профиля содержимым
-function popupSaveOpen() {
+function openPopupProfile() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = jobProfile.textContent;
   nameInput.dispatchEvent(new Event('input'));
   jobInput.dispatchEvent(new Event('input'));
   openPopup(popupProfile);
-  closePopupEscape(popupProfile);
+  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 }
-
 // закрыть попап кнопкой Escape
-const closePopupEscape = (popup) => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
+function closePopupEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = page.querySelector('.popup_opened');
+    closePopup(openedPopup);
+    page.removeEventListener('keydown', closePopupEscape);
+    console.log('Этого никто никогда не заметит');
+  }
 }
-
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет'
 function handleProfileFormSubmit(evt) {
@@ -53,11 +59,10 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfile);
 }
 
-
 // --------------------------------------------------------------------------------------------------------------------------------
 
 // кнопка открытие окна редактирования профиля
-buttonProfileEdit.addEventListener('click', popupSaveOpen);
+buttonProfileEdit.addEventListener('click', openPopupProfile);
 
 // закрытие окна редактирования профиля
 buttonCloseProfileEdit.addEventListener('click', () => closePopup(popupProfile));
@@ -66,10 +71,5 @@ buttonCloseProfileEdit.addEventListener('click', () => closePopup(popupProfile))
 // он будет следить за событием “submit” - «отправка»
 formProfile.addEventListener('submit', handleProfileFormSubmit);
 
-//  Закрыть любой попап по клику на оверлей
-page.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-});
+
 

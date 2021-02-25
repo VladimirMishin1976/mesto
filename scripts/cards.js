@@ -32,7 +32,9 @@ function createCard(item) {
   imageCard.src = item['link'];
   captionCard.textContent = item['name'];
   // Открыть попап картинки (клик по картинке карточки)
-  imageCard.addEventListener('click', handlePopupImageCard);
+  imageCard.addEventListener('click', () => {
+    handlePopupImageCard(item['name'], item['link']);
+  });
   // Реагирование на кнопку лайк
   const likeIcon = card.querySelector('.card__like');
   likeIcon.addEventListener('click', () => { likeIcon.classList.toggle('card__like_choosed') });
@@ -48,15 +50,13 @@ function addCardToCardList(item) {
 }
 
 // Открытие попапа увеличенной картинки при клике на картинку карточки
-function handlePopupImageCard(evt) {
-  // Переменные карточки
-  const imageCard = evt.target;
-  const card = imageCard.closest('.card');
-  const captionCard = card.querySelector('.card__caption');
-  popupCardImage.src = imageCard.src;
-  popupCardImage.alt = imageCard.alt;
-  popupCardCaption.textContent = captionCard.textContent;
+function handlePopupImageCard(name, link) {
+  popupCardImage.src = link;
+  popupCardImage.alt = name;
+  popupCardCaption.textContent = name;
   openPopup(popupCard);
+  closePopupClickOverlay(popupCard);
+  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 }
 
 // Кнопка добавить карточку введеную в попап карточку - открытие попапа
@@ -73,11 +73,12 @@ function handleAddCardSubmit(evt) {
 initialCards.forEach(addCardToCardList);
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => {
-  closePopupEscape(popupAddCard);
+  closePopupClickOverlay(popupAddCard);
   formAddCard.reset();
   openPopup(popupAddCard);
   inputCardTitle.dispatchEvent(new Event('input'));
   inputCardImage.dispatchEvent(new Event('input'));
+  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 });
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => {

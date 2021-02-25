@@ -1,22 +1,34 @@
-const showInputError = (inputElement, errorMessage) => {
-  const errorElement = inputElement.closest('.popup__field').querySelector('.popup__input-error');
-  inputElement.classList.add('popup__input_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__input-error_active');
+const selectorsForm = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_inactive',
+  labelSelector: '.popup__field',
+  inputErrorSelector: '.popup__input-error',
+  inputTypeErrorClass: 'popup__input_type_error',
+  inputErrorActiveClass: 'popup__input-error_active'
 };
 
-const hideInputError = (inputElement) => {
-  const errorElement = inputElement.closest('.popup__field').querySelector('.popup__input-error');
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.classList.remove('popup__input-error_active');
+
+const showInputError = (inputElement, errorMessage, selectors) => {
+  const errorElement = inputElement.closest(selectors.labelSelector).querySelector(selectors.inputErrorSelector);
+  inputElement.classList.add(selectors.inputTypeErrorClass);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(selectors.inputErrorActiveClass);
+};
+
+const hideInputError = (inputElement, selectors) => {
+  const errorElement = inputElement.closest(selectors.labelSelector).querySelector(selectors.inputErrorSelector);
+  inputElement.classList.remove(selectors.inputTypeErrorClass);
+  errorElement.classList.remove(selectors.inputErrorActiveClass);
   errorElement.textContent = '';
 };
 
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (inputElement, selectors) => {
   if (!inputElement.validity.valid) {
-    showInputError(inputElement, inputElement.validationMessage);
+    showInputError(inputElement, inputElement.validationMessage, selectors);
   } else {
-    hideInputError(inputElement);
+    hideInputError(inputElement, selectors);
   }
 };
 
@@ -26,38 +38,40 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, selectors) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__save_inactive');
+    buttonElement.disabled = true;
+    buttonElement.classList.add(selectors.inactiveButtonClass);
   } else {
-    buttonElement.classList.remove('popup__save_inactive');
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(selectors.inactiveButtonClass);
   }
 };
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  const buttonElement = formElement.querySelector('.popup__save');
-  toggleButtonState(inputList, buttonElement);
+const setEventListeners = (formElement, selectors) => {
+  const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
+  const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, selectors);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(inputElement, selectors);
+      toggleButtonState(inputList, buttonElement, selectors);
     });
   });
 };
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__container'));// Массив форм
+const enableValidation = (selectors) => {
+  const formList = Array.from(document.querySelectorAll(selectors.formSelector));// Массив форм
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, selectors);
   });
 };
 
-enableValidation();
+enableValidation(selectorsForm);
 
 
 
