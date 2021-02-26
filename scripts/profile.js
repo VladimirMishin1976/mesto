@@ -15,14 +15,16 @@ const buttonProfileEdit = page.querySelector('.profile__edit-button');
 // функция скрыть popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  page.removeEventListener('keydown', closePopupEscape);
 }
 // функция открыть popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  closePopupClickOverlay(popup);
+  
+  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 }
 //  Закрыть попап по клику на оверлей
-const closePopupClickOverlay = (popup) => { // Есть ли смысл в отдельной функции или лучше слушатель сразу в openPopup???
+const closePopupClickOverlay = (popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target === popup) {
       closePopup(popup);
@@ -36,15 +38,12 @@ function openPopupProfile() {
   nameInput.dispatchEvent(new Event('input'));
   jobInput.dispatchEvent(new Event('input'));
   openPopup(popupProfile);
-  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 }
 // закрыть попап кнопкой Escape
 function closePopupEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = page.querySelector('.popup_opened');
     closePopup(openedPopup);
-    page.removeEventListener('keydown', closePopupEscape);
-    console.log('Этого никто никогда не заметит');
   }
 }
 // Обработчик «отправки» формы, хотя пока

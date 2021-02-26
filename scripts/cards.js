@@ -18,8 +18,6 @@ const popupCardImage = popupCard.querySelector('.popup__img');
 const popupCardCaption = popupCard.querySelector('.popup__img-caption');
 const popupCardClose = popupCard.querySelector('.popup__close');
 
-
-
 // Функции ---------------------------------------------------------------------------------------------------------------------------
 // function openPopup() и closePopup- в файле profile.js
 
@@ -55,9 +53,7 @@ function handlePopupImageCard(name, link) {
   popupCardImage.alt = name;
   popupCardCaption.textContent = name;
   openPopup(popupCard);
-  closePopupClickOverlay(popupCard);
-  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
-}
+  }
 
 // Кнопка добавить карточку введеную в попап карточку - открытие попапа
 function handleAddCardSubmit(evt) {
@@ -73,12 +69,10 @@ function handleAddCardSubmit(evt) {
 initialCards.forEach(addCardToCardList);
 // Открытие окна добавления карточки
 buttonAddCard.addEventListener('click', () => {
-  closePopupClickOverlay(popupAddCard);
-  formAddCard.reset();
+   formAddCard.reset();
   openPopup(popupAddCard);
   inputCardTitle.dispatchEvent(new Event('input'));
   inputCardImage.dispatchEvent(new Event('input'));
-  page.addEventListener('keydown', closePopupEscape); // закрыть попап по Esc
 });
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => {
@@ -88,4 +82,9 @@ buttonCloseAddCard.addEventListener('click', () => {
 formAddCard.addEventListener('submit', handleAddCardSubmit);
 // Закрыть попап картинки карточки
 popupCardClose.addEventListener('click', () => closePopup(popupCard));
+
+// Закрыть попап по Оверлею
+closePopupClickOverlay(popupCard);
+closePopupClickOverlay(popupAddCard);
+closePopupClickOverlay(popupProfile);
 
