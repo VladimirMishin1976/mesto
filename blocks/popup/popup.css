@@ -10,5 +10,5 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: .5s linear;
+  transition: .15s linear;
 }

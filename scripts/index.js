@@ -131,6 +131,9 @@ buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
   inputCardTitle.dispatchEvent(new Event('input'));
   inputCardImage.dispatchEvent(new Event('input'));
+  // Сброс ошибок при открытии формы 
+  formValidatorAddCard.resetError();
+  formValidatorProfile.resetError();
 });
 // Кнопка закрыть попап добавления карточки
 buttonCloseAddCard.addEventListener('click', () => closePopup(popupAddCard));
@@ -146,5 +149,8 @@ closePopupClickOverlay(popupCard);
 closePopupClickOverlay(popupAddCard);
 closePopupClickOverlay(popupProfile);
 // Валидация
-new FormValidator(selectorsForm, popupProfile).enableValidation();
-new FormValidator(selectorsForm, popupAddCard).enableValidation();
+const formValidatorProfile = new FormValidator(selectorsForm, popupProfile);
+const formValidatorAddCard = new FormValidator(selectorsForm, popupAddCard);
+formValidatorAddCard.enableValidation();
+formValidatorProfile.enableValidation();
+
