@@ -6,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Жак-Ив Кусто</title>
   <link rel="stylesheet" href="./pages/index.css">
-  <script src="./scripts/initial-card.js" defer></script>
-  <script src="./scripts/profile.js" defer></script>
-  <script src="./scripts/cards.js" defer></script>
-  <script src="./scripts/validaton.js" defer></script>
 </head>
 
 <body class="page">
@@ -41,6 +37,24 @@
     <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
   </footer>
 
+  <!-- Попап - Добавление картчки -->
+  <article class="popup popup_place_add-card">
+    <form class="popup__container" name="add-place" novalidate>
+      <h2 class="popup__title">Новое место</h2>
+      <label class="popup__field">
+        <input class="popup__input" type="text" placeholder="Название" name="tittle-place" required minlength="2"
+          maxlength="30">
+        <span class="popup__input-error tittle-place-error"></span>
+      </label>
+      <label class="popup__field">
+        <input class="popup__input" type="url" placeholder="Ссылка на картинку" name="link-img-place" required>
+        <span class="popup__input-error link-img-place-error"></span>
+      </label>
+      <button class="popup__save" type="submit">Создать</button>
+      <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
+    </form>
+  </article>
+
   <!-- Попап - профиль -->
   <article class="popup popup_place_profile">
     <form class="popup__container" name="edit-profile" novalidate>
@@ -57,24 +71,6 @@
       </label>
       <button class="popup__save" type="submit">Сохранить</button>
       <button class="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
-    </form>
-  </article>
-
-  <!-- Попап - Добавление картчки -->
-  <article class="popup popup_place_add-card">
-    <form class="popup__container" name="add-place" novalidate>
-      <h2 class="popup__title">Новое место</h2>
-      <label class="popup__field">
-        <input class="popup__input" type="text" placeholder="Название" name="tittle-place" required minlength="2"
-          maxlength="30">
-        <span class="popup__input-error tittle-place-error"></span>
-      </label>
-      <label class="popup__field">
-        <input class="popup__input" type="url" placeholder="Ссылка на картинку" name="link-img-place" required>
-        <span class="popup__input-error link-img-place-error"></span>
-      </label>
-      <button class="popup__save" type="submit">Создать</button>
-      <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
     </form>
   </article>
 
@@ -99,6 +95,9 @@
 
     </li>
   </template>
+
+  <script src="./scripts/initial-card.js"></script>
+  <script type="module" src="./scripts/index.js"></script>
 
 </body>
 
