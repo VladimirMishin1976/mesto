@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
   constructor(selectors, formElement) {//принимает вторым параметром элемент той формы, которая валидируется ???
     this._selectors = selectors;
     this._formElement = formElement;
@@ -71,7 +71,6 @@ export class FormValidator {
       errorElement.textContent = '';
     });
   }
-
 }
 
 

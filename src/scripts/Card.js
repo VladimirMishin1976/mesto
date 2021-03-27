@@ -1,5 +1,5 @@
 
-export class Card {
+export default class Card {
   constructor(item, selector) {
     this._card = document.querySelector(selector).content.querySelector('.card').cloneNode(true);
     this._imageCard = this._card.querySelector('.card__image');
