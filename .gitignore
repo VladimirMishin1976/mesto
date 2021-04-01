@@ -3,6 +3,7 @@ logs
 .log
 npm-debug.log
 # Dependency directory
+dist
 node_modules
 build
 # Optional npm cache directory
@@ -12,3 +13,4 @@ build
 .idea
 .vscode
 .eslintcache
+

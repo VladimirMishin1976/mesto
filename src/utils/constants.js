@@ -28,32 +28,16 @@ export const initialCards = [
 
 export const page = document.querySelector('.page');
 // Попап редактирования профиля
-export const buttonCloseProfileEdit = page.querySelector('.popup__close_profile');
 export const popupProfile = page.querySelector('.popup_place_profile');
 export const formProfile = document.forms['edit-profile'];
-export const nameInput = formProfile.elements['name-profile'];
-export const jobInput = formProfile.elements['job-profile'];
+export const nameInput = formProfile.elements['name'];
+export const jobInput = formProfile.elements['job'];
 // профиль
-export const profileTitle = page.querySelector('.profile__title');
-export const jobProfile = page.querySelector('.profile__subtitle');
 export const buttonProfileEdit = page.querySelector('.profile__edit-button');
 // Попап добавления карточки_________________________________________________________________
 export const popupAddCard = page.querySelector('.popup_place_add-card');
 // кнопка добавить карточку
 export const buttonAddCard = page.querySelector('.profile__add-button');
-// Кнопка закрыть попап добавления карточки
-export const buttonCloseAddCard = page.querySelector('.popup__close_add-card');
-// Поля ввода попап добавления карточки
-export const formAddCard = document.forms['add-place'];
-export const inputCardTitle = formAddCard.elements['tittle-place'];
-export const inputCardImage = formAddCard.elements['link-img-place'];
-// Список карточек(контейнер карточек)
-export const cardListSection = page.querySelector('.cards__list');
-// Переменные попапа картинки карточки
-export const popupCard = page.querySelector('.popup_place_img');
-export const popupCardImage = popupCard.querySelector('.popup__img');
-export const popupCardCaption = popupCard.querySelector('.popup__img-caption');
-export const popupCardClose = popupCard.querySelector('.popup__close');
 
 export const selectorsForm = { // объект с селекторами для FormValidator
   formSelector: '.popup__container',
