@@ -1,3 +1,4 @@
+import './index.css'; // добавьте импорт главного файла стилей
 import {
   initialCards, popupProfile, nameInput, jobInput,
   buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm
