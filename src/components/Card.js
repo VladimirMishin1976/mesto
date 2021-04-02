@@ -1,6 +1,7 @@
 export default class Card {
   // handleCardClick - функция должна открывать попап с картинкой при клике на карточку.
   // item = объект с name и link карточки
+  // selector - селектор темплейта карточки
   constructor(item, selector, handleCardClick) {
     this._card = document.querySelector(selector).content.querySelector('.card').cloneNode(true);
     this._imageCard = this._card.querySelector('.card__image');
