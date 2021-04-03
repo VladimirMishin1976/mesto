@@ -1,3 +1,5 @@
+// горячая клавиша закрытия попапа
+export const keyClosePopup = 'Escape';
 // Cards Массив начальной загрузки
 export const initialCards = [
   {
