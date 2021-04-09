@@ -1,9 +1,9 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
   initialCards, popupProfile, nameInput, jobInput,
-  buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm
+  buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm, address, token
 } from '../utils/constants.js';
-
+import Api from '../components/Api.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -11,10 +11,45 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
+// Api
+const api = new Api({ address: address, token: token });
+
+api.getUserInfo() // установили данные юзера с сервера на сайт при загрузке страницы
+  .then(info => {
+    userInfo.setUserInfo({
+      name: info.name,
+      job: info.about,
+      avatar: info.avatar
+    });
+  }).catch(err => console.error(err));
+
+api.getInitialCards() // загрузка карточек с сервера
+  .then(cards => {
+    const cardList = new Section({
+      data: cards,
+      renderer: (item) => {
+        const card = new Card(item,
+          '.template-card',
+          // Открытие попапа увеличенной картинки
+          () => {
+            popupWithImage.open(card._name, card._link);
+          }
+        );
+        const cardElement = card.createCard();
+        cardList.addItem(cardElement);
+      }
+    },
+      '.cards__list'
+    );
+    cardList.renderItems();
+  });
+  
+
 // --profile edit------------------------------------------------------------------------------------------------------------------------------
 const userInfo = new UserInfo({
   userNameSelector: '.profile__title',
-  userJobSelector: '.profile__subtitle'
+  userJobSelector: '.profile__subtitle',
+  userAvatar: '.profile__avatar'
 });
 // ПОпап профиля
 const popupProfileForm = new PopupWithForm('.popup_place_profile',
@@ -39,24 +74,24 @@ const popupWithImage = new PopupWithImage('.popup_place_img');
 popupWithImage.setEventListeners();
 
 // Добавление карточек из массива через класс Section
-const cardList = new Section({
-  data: initialCards,
-  renderer: (item) => {
-    const card = new Card(item,
-      '.template-card',
-      // Открытие попапа увеличенной картинки
-      () => {
-        popupWithImage.open(card._name, card._link);
-      }
-    );
-    const cardElement = card.createCard();
-    cardList.addItem(cardElement);
-  }
-},
-  '.cards__list'
-);
+// const cardList = new Section({
+//   data: initialCards,
+//   renderer: (item) => {
+//     const card = new Card(item,
+//       '.template-card',
+//       // Открытие попапа увеличенной картинки
+//       () => {
+//         popupWithImage.open(card._name, card._link);
+//       }
+//     );
+//     const cardElement = card.createCard();
+//     cardList.addItem(cardElement);
+//   }
+// },
+//   '.cards__list'
+// );
 
-cardList.renderItems();
+// cardList.renderItems();
 
 // Валидация ------------------------------------------------------------------------------------------------------
 const formValidatorProfile = new FormValidator(selectorsForm, popupProfile);
@@ -88,6 +123,10 @@ buttonAddCard.addEventListener('click', () => {
   // Сброс ошибок при открытии формы
   formValidatorAddCard.resetError();
 });
+
+
+
+
 
 
 
