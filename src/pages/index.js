@@ -1,6 +1,6 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
-  initialCards, popupProfile, nameInput, jobInput,
+  popupProfile, nameInput, jobInput,
   buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm, address, token
 } from '../utils/constants.js';
 import Api from '../components/Api.js'
@@ -11,8 +11,13 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
+// --Card -------------------------------------------------------------------------------------------------------------------------
+// попап большого изображения - Открытие закрытие
+const popupWithImage = new PopupWithImage('.popup_place_img');
+popupWithImage.setEventListeners();
+// Cекция с карточками
 const cardList = new Section({
-    renderer: (item) => {
+  renderer: (item) => {
     const card = new Card(item,
       '.template-card',
       // Открытие попапа увеличенной картинки
@@ -30,21 +35,19 @@ const cardList = new Section({
 // Api
 const api = new Api({ address: address, token: token });
 
-api.getUserInfo() // установили данные юзера с сервера на сайт при загрузке страницы
+api.getUserInfo() // 1. Загрузка информации о пользователе с сервера
   .then(info => {
     userInfo.setUserInfo({
       name: info.name,
-      job: info.about,
+      about: info.about,
       avatar: info.avatar
     });
   }).catch(err => console.error(err));
 
-api.getInitialCards() // загрузка карточек с сервера
+api.getInitialCards() // 2. Загрузка карточек с сервера
   .then(cards => {
-
-    cardList.renderItems(cards);
-  });
-
+    cardList.renderItems(cards); // Добавление карточек c сервера
+  }).catch(err => console.error(err));
 
 // --profile edit------------------------------------------------------------------------------------------------------------------------------
 const userInfo = new UserInfo({
@@ -53,46 +56,29 @@ const userInfo = new UserInfo({
   userAvatar: '.profile__avatar'
 });
 // ПОпап профиля
-const popupProfileForm = new PopupWithForm('.popup_place_profile',
+const popupProfileForm = new PopupWithForm(
+  '.popup_place_profile',
   (formDataProfile) => { //колбек вызываемый при сабмите - принимает данные всех полей формы.
-    userInfo.setUserInfo(formDataProfile);
+    api.editUserInfo(formDataProfile) //3. Редактирование профиля
+    .then(() => userInfo.setUserInfo(formDataProfile))
+    .catch(err => console.error(err));
+
     popupProfileForm.close();
   }
+
 );
 popupProfileForm.setEventListeners();
+
 // кнопка открытие окна редактирования профиля
 buttonProfileEdit.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
+
   // присваиваем полям ввода значения из страницы
   nameInput.value = userData.name;
-  jobInput.value = userData.job;
+  jobInput.value = userData.about;
   popupProfileForm.open()
 });
 
-// --Card -------------------------------------------------------------------------------------------------------------------------
-// попап большого изображения - Открытие закрытие
-const popupWithImage = new PopupWithImage('.popup_place_img');
-popupWithImage.setEventListeners();
-
-// Добавление карточек из массива через класс Section
-// const cardList = new Section({
-//   data: initialCards,
-//   renderer: (item) => {
-//     const card = new Card(item,
-//       '.template-card',
-//       // Открытие попапа увеличенной картинки
-//       () => {
-//         popupWithImage.open(card._name, card._link);
-//       }
-//     );
-//     const cardElement = card.createCard();
-//     cardList.addItem(cardElement);
-//   }
-// },
-//   '.cards__list'
-// );
-
-// cardList.renderItems();
 
 // Валидация ------------------------------------------------------------------------------------------------------
 const formValidatorProfile = new FormValidator(selectorsForm, popupProfile);

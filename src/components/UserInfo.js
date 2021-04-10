@@ -9,14 +9,14 @@ export default class UserInfo { //отвечает за управление о�
   getUserInfo() { //возвращает объект с данными пользователя - существующие
     return {
       name: this._userName.textContent,
-      job: this._userJob.textContent,
+      about: this._userJob.textContent,
       avatar: this._userAvatar
     };
   }
 
-  setUserInfo({name, job, avatar}) { //принимает данные пользователя и добавляет их на страницу
-    this._userName.textContent = name;
-    this._userJob.textContent = job;
-    this._userAvatar.src = avatar;
+  setUserInfo({name, about, avatar}) { //принимает данные пользователя и добавляет их на страницу
+    this._userName.textContent = name ? name : this._userName.textContent;
+    this._userJob.textContent = about ? about : this._userJob.textContent;
+    this._userAvatar.src = avatar ? avatar : this._userAvatar.src;
   }
 }

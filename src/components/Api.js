@@ -11,12 +11,10 @@ export default class Api {
           authorization: this._token
         }
       }
-    ).then(cards => {
-      if (cards.ok) {
-        return cards.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`);
-    });
+    ).then(cards => cards.ok
+      ? cards.json()
+      : Promise.reject(`Ошибка: ${response.status}`)
+    );
   }
 
   getUserInfo() {
@@ -26,15 +24,13 @@ export default class Api {
           authorization: this._token
         }
       }
-    ).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`);
-    });
+    ).then(response => response.ok
+      ? response.json()
+      : Promise.reject(`Ошибка: ${response.status}`)
+    );
   }
 
-  editUserInfo(name, about) {
+  editUserInfo({ name, about }) {
     return fetch(`${this._address}/users/me`,
       {
         method: 'PATCH',
@@ -47,7 +43,11 @@ export default class Api {
           about: about
         })
       }
-    )
+    ).then(response => response.ok
+      ? response.json()
+      : Promise.reject(`Ошибка: ${response.status}`)
+    );
+
   }
 }
 
