@@ -11,6 +11,22 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
+const cardList = new Section({
+    renderer: (item) => {
+    const card = new Card(item,
+      '.template-card',
+      // Открытие попапа увеличенной картинки
+      () => {
+        popupWithImage.open(card._name, card._link);
+      }
+    );
+    const cardElement = card.createCard();
+    cardList.addItem(cardElement);
+  }
+},
+  '.cards__list'
+);
+
 // Api
 const api = new Api({ address: address, token: token });
 
@@ -25,25 +41,10 @@ api.getUserInfo() // установили данные юзера с серве�
 
 api.getInitialCards() // загрузка карточек с сервера
   .then(cards => {
-    const cardList = new Section({
-      data: cards,
-      renderer: (item) => {
-        const card = new Card(item,
-          '.template-card',
-          // Открытие попапа увеличенной картинки
-          () => {
-            popupWithImage.open(card._name, card._link);
-          }
-        );
-        const cardElement = card.createCard();
-        cardList.addItem(cardElement);
-      }
-    },
-      '.cards__list'
-    );
-    cardList.renderItems();
+
+    cardList.renderItems(cards);
   });
-  
+
 
 // --profile edit------------------------------------------------------------------------------------------------------------------------------
 const userInfo = new UserInfo({

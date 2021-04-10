@@ -33,5 +33,21 @@ export default class Api {
       return Promise.reject(`Ошибка: ${response.status}`);
     });
   }
+
+  editUserInfo(name, about) {
+    return fetch(`${this._address}/users/me`,
+      {
+        method: 'PATCH',
+        headers: {
+          authorization: this._token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          about: about
+        })
+      }
+    )
+  }
 }
 
