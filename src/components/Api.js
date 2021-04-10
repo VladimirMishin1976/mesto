@@ -4,7 +4,7 @@ export default class Api {
     this._token = token;
   }
 
-  getInitialCards() {
+  getInitialCards() { //2. Загрузка карточек с сервера
     return fetch(`${this._address}/cards`,
       {
         headers: {
@@ -17,7 +17,7 @@ export default class Api {
     );
   }
 
-  getUserInfo() {
+  getUserInfo() { //1. Загрузка информации о пользователе с сервера
     return fetch(`${this._address}/users/me`,
       {
         headers: {
@@ -30,7 +30,7 @@ export default class Api {
     );
   }
 
-  editUserInfo({ name, about }) {
+  editUserInfo({ name, about }) { //3. Редактирование профиля
     return fetch(`${this._address}/users/me`,
       {
         method: 'PATCH',
@@ -45,9 +45,25 @@ export default class Api {
       }
     ).then(response => response.ok
       ? response.json()
-      : Promise.reject(`Ошибка: ${response.status}`)
-    );
-
+      : Promise.reject(`Ошибка: ${response.status}`));
   }
+
+  addCard({ name, link }) {  //4. Добавление новой карточки
+    return fetch(`${this._address}/cards`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: this._token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          link: link
+        })
+      }).then(response => response.ok
+        ? response.json()
+        : Promise.reject(`Ошибка: ${response.status}`))
+  }
+
 }
 

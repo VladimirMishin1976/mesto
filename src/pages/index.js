@@ -60,8 +60,8 @@ const popupProfileForm = new PopupWithForm(
   '.popup_place_profile',
   (formDataProfile) => { //колбек вызываемый при сабмите - принимает данные всех полей формы.
     api.editUserInfo(formDataProfile) //3. Редактирование профиля
-    .then(() => userInfo.setUserInfo(formDataProfile))
-    .catch(err => console.error(err));
+      .then(() => userInfo.setUserInfo(formDataProfile))
+      .catch(err => console.error(err));
 
     popupProfileForm.close();
   }
@@ -88,17 +88,19 @@ formValidatorProfile.enableValidation();
 
 // ПОпап добавления карточки ----------------------------------------------------------------------------------
 const popupAddCardForm = new PopupWithForm('.popup_place_add-card',
-  (formData) => {
-    const card = new Card(formData,
-      '.template-card',
-      // Открытие попапа увеличенной картинки
-      () => {
-        popupWithImage.open(card._name, card._link);
-      }
-    );
-    const cardElement = card.createCard();
-    cardList.addItem(cardElement);
-
+  (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
+    api.addCard(formData)
+      .then(dataCard => { //4. Добавление новой карточки
+        const card = new Card(formData,
+          '.template-card',
+          // Открытие попапа увеличенной картинки
+          () => {
+            popupWithImage.open(card._name, card._link);
+          }
+        );
+        const cardElement = card.createCard();
+        cardList.addItem(cardElement);
+      }).catch(err => console.error(err));
     popupAddCardForm.close();
   }
 );
