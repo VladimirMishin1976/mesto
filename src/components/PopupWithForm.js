@@ -1,7 +1,7 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, handleFormSubmit) { //handleFormSubmit -  колбэк обработчик сабмита формы.
+  constructor({ popupSelector, handleFormSubmit }) { //handleFormSubmit -  колбэк обработчик сабмита формы.
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._inputList = this._popup.querySelectorAll('.popup__input'); //массив инпутов в форме
@@ -17,12 +17,13 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     //добавить обработчик сабмита формы.
-    this._popup.addEventListener('submit', () => {
+    this._popup.addEventListener('submit', (evt) => {
+      evt.preventDefault();
       // добавим вызов функции _handleFormSubmit
       // передадим ей объект — результат работы _getInputValues
       this._handleFormSubmit(this._getInputValues());
+      this.close();
     });
-
     super.setEventListeners();
   }
 

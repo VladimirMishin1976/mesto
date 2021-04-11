@@ -2,7 +2,7 @@ export default class Section { // Section - отвечает за отрисов
   // data —  массив данных, которые нужно добавить на страницу при инициализации класса
   // renderer —  функция, которая отвечает за создание и отрисовку каждого отдельного элемента.
   // containerSelector - селектор контейнера в который нужно добавлять созданные элементы.
-  constructor({ renderer }, containerSelector) {
+  constructor({ renderer, containerSelector }) {
 
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);

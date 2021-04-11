@@ -2,7 +2,6 @@ import { keyClosePopup } from '../utils/constants.js';
 
 export default class Popup { //отвечает за открытие и закрытие попапа
   constructor(popupSelector) {
-    this.popupSelector = popupSelector;
     this._popup = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
   }

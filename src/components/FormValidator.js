@@ -57,9 +57,6 @@ export default class FormValidator {
   };
   // Включить валидацию
   enableValidation() {
-    this._formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
     this._setEventListeners();
   }
   // Сброс ошибок при открытии формы
