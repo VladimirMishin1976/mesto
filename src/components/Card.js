@@ -4,12 +4,16 @@ export default class Card {
   // selector - селектор темплейта карточки
   constructor(item, selector, handleCardClick) {
     this._card = document.querySelector(selector).content.querySelector('.card').cloneNode(true);
+    // Элементы карточки
     this._imageCard = this._card.querySelector('.card__image');
     this._captionCard = this._card.querySelector('.card__caption');
     this._likeIcon = this._card.querySelector('.card__like');
     this._trashCard = this._card.querySelector('.card__trash');
+    this._likeCount = this._card.querySelector('.card__like-count');
+    // Данные элементов карточек
     this._name = item['name'];
     this._link = item['link'];
+    this._likeData = item['likes']; // данные количества лайков с сервера
     this._handleCardClick = handleCardClick;
   }
   // Реагирование на кнопку лайк
@@ -31,6 +35,8 @@ export default class Card {
     this._imageCard.alt = this._name;
     this._imageCard.src = this._link;
     this._captionCard.textContent = this._name;
+    this._likeCount.textContent = Number.isInteger(this._likeData[0]) ? this._likeData : '0';
+    console.log(this._likeData)
     this._setEventListeners();
     return this._card;
   }

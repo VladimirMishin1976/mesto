@@ -4,19 +4,6 @@ export default class Api {
     this._token = token;
   }
 
-  getInitialCards() { //2. Загрузка карточек с сервера
-    return fetch(`${this._address}/cards`,
-      {
-        headers: {
-          authorization: this._token
-        }
-      }
-    ).then(cards => cards.ok
-      ? cards.json()
-      : Promise.reject(`Ошибка: ${response.status}`)
-    );
-  }
-
   getUserInfo() { //1. Загрузка информации о пользователе с сервера
     return fetch(`${this._address}/users/me`,
       {
@@ -46,6 +33,19 @@ export default class Api {
     ).then(response => response.ok
       ? response.json()
       : Promise.reject(`Ошибка: ${response.status}`));
+  }
+
+  getInitialCards() { //2. Загрузка карточек с сервера
+    return fetch(`${this._address}/cards`,
+      {
+        headers: {
+          authorization: this._token
+        }
+      }
+    ).then(cards => cards.ok
+      ? cards.json()
+      : Promise.reject(`Ошибка: ${response.status}`)
+    );
   }
 
   addCard({ name, link }) {  //4. Добавление новой карточки
