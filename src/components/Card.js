@@ -41,7 +41,7 @@ export default class Card {
   }
   // Создать карточку места с фото
   createCard() {
-    if (this._idOwnerCard !== this._userId) {
+    if (this._idOwnerCard !== this._userId) {// Удаление корзины у чужих карточек
       this._trashCard.remove();
     }
     this._imageCard.alt = this._name;
@@ -51,6 +51,7 @@ export default class Card {
     this._setEventListeners();
     return this._card;
   }
+
 }
 
 

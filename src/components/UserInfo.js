@@ -14,9 +14,10 @@ export default class UserInfo { //отвечает за управление о�
     };
   }
 
-  setUserInfo({ name, about, avatar }) { //принимает данные пользователя и добавляет их на страницу
+  setUserInfo({ name, about, avatar, _id }) { //принимает данные пользователя и добавляет их на страницу
     this._userName.textContent = name ? name : this._userName.textContent;
     this._userJob.textContent = about ? about : this._userJob.textContent;
     this._userAvatar.src = avatar ? avatar : this._userAvatar.src;
+    this._userId = _id;
   }
 }

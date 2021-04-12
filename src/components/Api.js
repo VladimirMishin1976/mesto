@@ -77,7 +77,7 @@ export default class Api {
   }
 
   // Получение ID удаляемой  карточки
-  getIdRemoveCard(id, card) {
+  getDataRemoveCard(id, card) {
     this._idRemoveCard = id;
     this._card = card;
   }

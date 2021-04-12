@@ -42,54 +42,54 @@ const popupTrashCard = new PopupWithButton({
   handleSubmit: () => {
     api.removeCard()
       .then(() => {
-        api._card.removeCard();
+        api._card.removeCard(); 
       }).catch(err => console.log(err));
   }
 });
 popupTrashCard.setEventListeners();
 
+// Cекция с карточками-------------------------------------------------------
+const cardList = new Section({
+  renderer: (item) => {
+console.log(userInfo._userId)
+    cardList.addItem(cardPhoto(item, userInfo._userId));
+  },
+  containerSelector: '.cards__list'
+});
+
+
 // Api
 const api = new Api({ address: address, token: token });
 
+api.getInitialCards() // 2. Загрузка карточек с сервера
+  .then(cards => {
+    cardList.renderItems(cards); // Добавление карточек c сервера
+  }).catch(err => console.error(err));
+
 api.getUserInfo() // 1. Загрузка информации о пользователе с сервера
   .then(info => {
-    userInfo.setUserInfo({ // Установили на странице данные пользователя с сервера
-      name: info.name,
-      about: info.about,
-      avatar: info.avatar
-    });
-
-    // Cекция с карточками
-    const cardList = new Section({
-      renderer: (item) => {
-        cardList.addItem(cardPhoto(item, info._id));
-      },
-      containerSelector: '.cards__list'
-    });
-
-    // ПОпап добавления карточки ----------------------------------------------------------------------------------
-    const popupAddCard = new PopupWithForm({
-      popupSelector: '.popup_place_add-card',
-      handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
-        api.addCard(formData)
-          .then(dataCard => { //4. Добавление новой карточки
-            cardList.addItem(cardPhoto(dataCard, info._id));
-          }).catch(err => console.error(err));
-      }
-    });
-    // Открытие окна удаления карточки
-    popupAddCard.setEventListeners();
-    // Открытие окна добавления карточки
-    buttonAddCard.addEventListener('click', () => {
-      popupAddCard.open();
-      // Сброс ошибок при открытии формы
-      formValidatorAddCard.resetError();
-    });
-    api.getInitialCards() // 2. Загрузка карточек с сервера
-      .then(cards => {
-        cardList.renderItems(cards); // Добавление карточек c сервера
-      }).catch(err => console.error(err));
+    userInfo.setUserInfo(info); // Установили на странице данные пользователя с сервера
   }).catch(err => console.error(err));
+
+// ПОпап добавления карточки ----------------------------------------------------------------------------------
+const formAddCard = new PopupWithForm({
+  popupSelector: '.popup_place_add-card',
+  handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
+    api.addCard(formData)
+      .then(dataCard => { //4. Добавление новой карточки
+        cardList.addItem(cardPhoto(dataCard, userInfo._userId));
+      }).catch(err => console.error(err));
+  }
+});
+
+formAddCard.setEventListeners();
+// Открытие окна добавления карточки
+buttonAddCard.addEventListener('click', () => {
+  formAddCard.open();
+  // Сброс ошибок при открытии формы
+  formValidatorAddCard.resetError();
+});
+
 
 // --profile edit------------------------------------------------------------------------------------------------------------------------------
 const userInfo = new UserInfo({
