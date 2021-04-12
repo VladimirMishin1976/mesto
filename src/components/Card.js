@@ -1,9 +1,11 @@
+// import {idUser} from '../pages/index.js';
 export default class Card {
   // handleCardClick - функция должна открывать попап с картинкой при клике на карточку.
   // item = объект с name и link карточки
   // selector - селектор темплейта карточки
-  constructor({ item, selector, handleCardClick, handleTrashClick }) {
+  constructor({ item, userId, selector, handleCardClick, handleTrashClick }) {
     this._card = document.querySelector(selector).content.querySelector('.card').cloneNode(true);
+    this._userId = userId;
     // Элементы карточки
     this._imageCard = this._card.querySelector('.card__image');
     this._captionCard = this._card.querySelector('.card__caption');
@@ -14,6 +16,8 @@ export default class Card {
     this._name = item['name'];
     this._link = item['link'];
     this._likeData = item['likes']; // данные количества лайков с сервера
+    this._idCard = item['_id'];
+    this._idOwnerCard = item.owner['_id'];
     // Колбеки
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
@@ -24,10 +28,10 @@ export default class Card {
     this._likeIcon.classList.toggle('card__like_choosed');
   }
   // Корзина
-  // _removeCard() {
-  //   this._card.remove();
-  //   this._card = null;
-  // }
+  removeCard() {
+    this._card.remove();
+    this._card = null;
+  }
 
   _setEventListeners() {
     this._likeIcon.addEventListener('click', () => this._toggleLike());
@@ -37,6 +41,9 @@ export default class Card {
   }
   // Создать карточку места с фото
   createCard() {
+    if (this._idOwnerCard !== this._userId) {
+      this._trashCard.remove();
+    }
     this._imageCard.alt = this._name;
     this._imageCard.src = this._link;
     this._captionCard.textContent = this._name;

@@ -27,3 +27,4 @@ export const selectorsForm = { // объект с селекторами для 
   inputTypeErrorClass: 'popup__input_type_error',
   inputErrorActiveClass: 'popup__input-error_active'
 };
+

@@ -10,11 +10,10 @@ export default class Api {
         headers: {
           authorization: this._token
         }
-      }
-    ).then(response => response.ok
-      ? response.json()
-      : Promise.reject(`Ошибка: ${response.status}`)
-    );
+      }).then(response => response.ok
+        ? response.json()
+        : Promise.reject(`Ошибка: ${response.status}`)
+      );
   }
 
   editUserInfo({ name, about }) { //3. Редактирование профиля
@@ -65,5 +64,21 @@ export default class Api {
         : Promise.reject(`Ошибка: ${response.status}`))
   }
 
-}
+  removeCard() {  // 7. Удаление карточки
+    return fetch(`${this._address}/cards/${this._idRemoveCard}`,
+      {
+        method: 'DELETE',
+        headers: {
+          authorization: this._token,
+        },
+      }).then(response => response.ok
+        ? Promise.resolve('success')
+        : Promise.reject(`Ошибка: ${response.status}`))
+  }
 
+  // Получение ID удаляемой  карточки
+  getIdRemoveCard(id, card) {
+    this._idRemoveCard = id;
+    this._card = card;
+  }
+}
