@@ -29,11 +29,29 @@ const cardPhoto = (data, userId) => {
       },
       handleTrashClick: () => { // Открытие попапа удаления карточки
         popupTrashCard.open();
-        api.getDataRemoveCard(card._idCard, card);//  передача ID  и ссылки удаляемой карточки в api
+        api.getCurrentElement(card);//  передача ID  и ссылки удаляемой карточки в api
+      },
+      handleLikeClick: () => { //8. Постановка и снятие лайка
+        api.getCurrentElement(card);
+        if (card._likeOwner) { // Проверка своего лайка
+          api.deleteLike()
+            .then(response => {
+              cardy._likeOwner = false;
+              card._deleteLike();
+              card._likeCount.textContent = response.likes.length;
+            }).catch(err => console.log(err));
+        } else {
+          api.putLike()
+            .then(response => {
+              card._likeOwner = true;
+              card._addLike();
+              card._likeCount.textContent = response.likes.length;
+            }).catch(err => console.log(err));
+        }
       }
     }
   );
-  return card.createCard();
+  return card.createCard(data);
 }
 
 // 6. Попап удаления карточки -----------------------------------------
@@ -42,23 +60,13 @@ const popupTrashCard = new PopupWithButton({
   handleSubmit: () => {
     api.removeCard()
       .then(() => {
-        api._card.removeCard(); 
+        api._elem.removeCard();
       }).catch(err => console.log(err));
   }
 });
 popupTrashCard.setEventListeners();
 
-// Cекция с карточками-------------------------------------------------------
-const cardList = new Section({
-  renderer: (item) => {
-console.log(userInfo._userId)
-    cardList.addItem(cardPhoto(item, userInfo._userId));
-  },
-  containerSelector: '.cards__list'
-});
-
-
-// Api
+// Api--------------------------------------------------
 const api = new Api({ address: address, token: token });
 
 api.getInitialCards() // 2. Загрузка карточек с сервера
@@ -70,6 +78,14 @@ api.getUserInfo() // 1. Загрузка информации о пользов�
   .then(info => {
     userInfo.setUserInfo(info); // Установили на странице данные пользователя с сервера
   }).catch(err => console.error(err));
+
+// Cекция с карточками-------------------------------------------------------
+const cardList = new Section({
+  renderer: (item) => {
+    cardList.addItem(cardPhoto(item, userInfo._userId));
+  },
+  containerSelector: '.cards__list'
+});
 
 // ПОпап добавления карточки ----------------------------------------------------------------------------------
 const formAddCard = new PopupWithForm({

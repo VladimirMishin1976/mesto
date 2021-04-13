@@ -1,3 +1,5 @@
+import UserInfo from "./UserInfo";
+
 export default class Api {
   constructor({ address, token }) {
     this._address = address;
@@ -65,7 +67,7 @@ export default class Api {
   }
 
   removeCard() {  // 7. Удаление карточки
-    return fetch(`${this._address}/cards/${this._idRemoveCard}`,
+    return fetch(`${this._address}/cards/${this._elem._id}`,
       {
         method: 'DELETE',
         headers: {
@@ -73,12 +75,38 @@ export default class Api {
         },
       }).then(response => response.ok
         ? Promise.resolve('success')
-        : Promise.reject(`Ошибка: ${response.status}`))
+        : Promise.reject(`Ошибка: ${response.status}`));
   }
 
-  // Получение ID удаляемой  карточки
-  getDataRemoveCard(id, card) {
-    this._idRemoveCard = id;
-    this._card = card;
+  // Получение ID  и ссылки текущей(выбраной) карточки
+  getCurrentElement(elem) {
+    this._elem = elem;
+  }
+
+  // 8. Постановка и снятие лайка
+  deleteLike() {
+    return fetch(`${this._address}/cards/likes/${this._elem._id}`,
+      {
+        method: 'Delete',
+        headers: {
+          authorization: this._token
+        }
+      }).then(response => response.ok
+        ? response.json()
+        : Promise.reject(`Ошибка: ${response.status}`));
+  }
+
+  putLike() {
+    return fetch(`${this._address}/cards/likes/${this._elem._id}`,
+      {
+        method: 'PUT',
+        headers: {
+          authorization: this._token
+        }
+
+      }).then(response => response.ok
+        ? response.json()
+        : Promise.reject(`Ошибка: ${response.status}`))
   }
 }
+
