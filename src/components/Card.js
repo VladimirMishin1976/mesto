@@ -1,11 +1,11 @@
-// import {idUser} from '../pages/index.js';
+import {userId} from '../pages/index.js';
+
 export default class Card {
   // handleCardClick - функция должна открывать попап с картинкой при клике на карточку.
   // item = объект с name и link карточки
   // selector - селектор темплейта карточки
-  constructor({ item, userId, selector, handleCardClick, handleTrashClick, handleLikeClick }) {
+  constructor({ item, selector, handleCardClick, handleTrashClick, handleLikeClick }) {
     this._card = document.querySelector(selector).content.querySelector('.card').cloneNode(true);
-    this._userId = userId;
     // Элементы карточки
     this._imageCard = this._card.querySelector('.card__image');
     this._captionCard = this._card.querySelector('.card__caption');
@@ -18,8 +18,7 @@ export default class Card {
     this._likeData = item['likes']; // данные количества лайков с сервера
     this._id = item['_id'];
     this._idOwnerCard = item.owner['_id'];
-    console.log()
-    this._likeOwner = this._likeData.some(element => element._id === this._userId); // Проверка своего лайка
+    this._likeOwner = this._likeData.some(element => element._id === userId); // Проверка своего лайка
     // Колбеки
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
@@ -48,7 +47,7 @@ export default class Card {
   }
   // Создать карточку места с фото
   createCard() {
-    if (this._idOwnerCard !== this._userId) {// Удаление корзины у чужих карточек
+    if (this._idOwnerCard !== userId) { // Удаление корзины у чужих карточек
       this._trashCard.remove();
     }
 

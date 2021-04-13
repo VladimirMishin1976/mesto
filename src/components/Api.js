@@ -1,5 +1,3 @@
-import UserInfo from "./UserInfo";
-
 export default class Api {
   constructor({ address, token }) {
     this._address = address;

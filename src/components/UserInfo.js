@@ -18,6 +18,6 @@ export default class UserInfo { //отвечает за управление о�
     this._userName.textContent = name ? name : this._userName.textContent;
     this._userJob.textContent = about ? about : this._userJob.textContent;
     this._userAvatar.src = avatar ? avatar : this._userAvatar.src;
-    this._userId = _id;
+    this._userId = _id ? _id : this._userId;
   }
 }

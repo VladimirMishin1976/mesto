@@ -11,27 +11,28 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithButton from '../components/PopupWithButton.js';
+
+export let userId = 0;
 // --Card -------------------------------------------------------------------------------------------------------------------------
 // попап большого изображения - Открытие закрытие
 const popupWithImage = new PopupWithImage('.popup_place_img');
 popupWithImage.setEventListeners();
 
 // Функция создать карточку
-const cardPhoto = (data, userId) => {
+const cardPhoto = (data) => {
   const card = new Card(
     {
       item: data,
-      userId: userId,
       selector: '.template-card',
       handleCardClick: () => {  // Открытие попапа увеличенной картинки
         popupWithImage.open(card._name, card._link);
       },
       handleTrashClick: () => { // Открытие попапа удаления карточки
         popupTrashCard.open();
-        api.getCurrentElement(card);//  передача ID  и ссылки удаляемой карточки в api
+        api.getCurrentElement(card);//  передача ссылки удаляемой карточки в api
       },
       handleLikeClick: () => { //8. Постановка и снятие лайка
-        api.getCurrentElement(card);
+        api.getCurrentElement(card); //  передача ссылки текущей карточки в api
         if (card._likeOwner) { // Проверка своего лайка
           api.deleteLike()
             .then(response => {
@@ -68,20 +69,29 @@ popupTrashCard.setEventListeners();
 // Api--------------------------------------------------
 const api = new Api({ address: address, token: token });
 
-api.getInitialCards() // 2. Загрузка карточек с сервера
-  .then(cards => {
-    cardList.renderItems(cards); // Добавление карточек c сервера
-  }).catch(err => console.error(err));
+// ++++++++++++++           КОД ДО ПРИМЕНЕНИЯ   Promise.all             ++++++++++++++++++++++++
+// api.getInitialCards() // 2. Загрузка карточек с сервера
+// .then(cards => {
+//   cardList.renderItems(cards); // Добавление карточек c сервера
+// }).catch(err => console.error(err));
 
-api.getUserInfo() // 1. Загрузка информации о пользователе с сервера
-  .then(info => {
-    userInfo.setUserInfo(info); // Установили на странице данные пользователя с сервера
+// api.getUserInfo() // 1. Загрузка информации о пользователе с сервера
+// .then(info => {
+//   userInfo.setUserInfo(info); // Установили на странице данные пользователя с сервера
+// }).catch(err => console.error(err));
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(result => {
+    userId = result[1]._id;
+    cardList.renderItems(result[0]); // Добавление карточек c сервера
+    userInfo.setUserInfo(result[1]); // Установили на странице данные пользователя с сервера
   }).catch(err => console.error(err));
 
 // Cекция с карточками-------------------------------------------------------
 const cardList = new Section({
   renderer: (item) => {
-    cardList.addItem(cardPhoto(item, userInfo._userId));
+    cardList.addItem(cardPhoto(item));
   },
   containerSelector: '.cards__list'
 });
@@ -92,7 +102,7 @@ const formAddCard = new PopupWithForm({
   handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
     api.addCard(formData)
       .then(dataCard => { //4. Добавление новой карточки
-        cardList.addItem(cardPhoto(dataCard, userInfo._userId));
+        cardList.addItem(cardPhoto(dataCard));
       }).catch(err => console.error(err));
   }
 });
