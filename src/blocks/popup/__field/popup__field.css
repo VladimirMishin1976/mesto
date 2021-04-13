@@ -11,6 +11,10 @@
   margin: 0;
 }
 
+.popup__field:first-of-type {
+  margin-top: 50px;
+}
+
 @media screen and (max-width: 660px) {
   .popup__input {
     width: calc(100% - 44px);

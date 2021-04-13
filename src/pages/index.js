@@ -1,6 +1,6 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
-  popupProfile, nameInput, jobInput,
+  popupProfile, nameInput, jobInput, buttonAvatarEdit, popupAvatarEdit, popupAvatarInput,
   buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm, address, token
 } from '../utils/constants.js';
 import Api from '../components/Api.js'
@@ -11,7 +11,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithButton from '../components/PopupWithButton.js';
-
 // --Card -------------------------------------------------------------------------------------------------------------------------
 // попап большого изображения - Открытие закрытие
 const popupWithImage = new PopupWithImage('.popup_place_img');
@@ -36,17 +35,17 @@ const cardPhoto = (data, userId) => {
         if (card._likeOwner) { // Проверка своего лайка
           api.deleteLike()
             .then(response => {
-              cardy._likeOwner = false;
+              card._likeOwner = false;
               card._deleteLike();
               card._likeCount.textContent = response.likes.length;
-            }).catch(err => console.log(err));
+            }).catch(err => console.error(err));
         } else {
           api.putLike()
             .then(response => {
               card._likeOwner = true;
               card._addLike();
               card._likeCount.textContent = response.likes.length;
-            }).catch(err => console.log(err));
+            }).catch(err => console.error(err));
         }
       }
     }
@@ -61,7 +60,7 @@ const popupTrashCard = new PopupWithButton({
     api.removeCard()
       .then(() => {
         api._elem.removeCard();
-      }).catch(err => console.log(err));
+      }).catch(err => console.error(err));
   }
 });
 popupTrashCard.setEventListeners();
@@ -122,7 +121,6 @@ const popupProfileForm = new PopupWithForm(
       api.editUserInfo(formDataProfile) //3. Редактирование профиля
         .then(() => userInfo.setUserInfo(formDataProfile))
         .catch(err => console.error(err));
-      // popupProfileForm.close();
     }
   }
 );
@@ -131,20 +129,37 @@ popupProfileForm.setEventListeners();
 // кнопка открытие окна редактирования профиля
 buttonProfileEdit.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
-
   // присваиваем полям ввода значения из страницы
   nameInput.value = userData.name;
   jobInput.value = userData.about;
   popupProfileForm.open()
 });
 
+// 9. Обновление аватара пользователя -----------------------------------------
+const formAvatarEdit = new PopupWithForm({
+  popupSelector: '.popup_place_avatar',
+  handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
+    api.editAvatarPhoto(formData)
+      .then(dataCard => {
+        userInfo._userAvatar.src = dataCard.avatar;//formData.link;
+      }).catch(err => console.error(err));
+  }
+});
+
+formAvatarEdit.setEventListeners();
+// Открытие окна добавления карточки
+buttonAvatarEdit.addEventListener('click', () => {
+  popupAvatarInput.value = userInfo._userAvatar.src;
+  formAvatarEdit.open();
+});
 
 // Валидация ------------------------------------------------------------------------------------------------------
 const formValidatorProfile = new FormValidator(selectorsForm, popupProfile);
 const formValidatorAddCard = new FormValidator(selectorsForm, popupAddCard);
+const formValidatorAvatarEdit = new FormValidator(selectorsForm, popupAvatarEdit);
 formValidatorAddCard.enableValidation();
 formValidatorProfile.enableValidation();
-
+formValidatorAvatarEdit.enableValidation();
 
 
 

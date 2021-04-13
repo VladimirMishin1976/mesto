@@ -10,12 +10,18 @@ export const popupProfile = page.querySelector('.popup_place_profile');
 export const formProfile = document.forms['edit-profile'];
 export const nameInput = formProfile.elements['name'];
 export const jobInput = formProfile.elements['about'];
-// профиль
+// профиль кнопка открытия попапа
 export const buttonProfileEdit = page.querySelector('.profile__edit-button');
 // Попап добавления карточки_________________________________________________________________
 export const popupAddCard = page.querySelector('.popup_place_add-card');
 // кнопка добавить карточку
 export const buttonAddCard = page.querySelector('.profile__add-button');
+// кнопка открыть попап аватара
+export const buttonAvatarEdit = page.querySelector('.profile__aratar-pointer');
+// темплейт попапа редактирования фото аватара
+export const popupAvatarEdit = page.querySelector('.popup_place_avatar');
+// поле ввода ссылки изображения аватара
+export const popupAvatarInput = document.forms['avatar-photo'].elements['link'];
 
 export const selectorsForm = { // объект с селекторами для FormValidator
   formSelector: '.popup__container',

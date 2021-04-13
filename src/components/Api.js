@@ -78,7 +78,7 @@ export default class Api {
         : Promise.reject(`Ошибка: ${response.status}`));
   }
 
-  // Получение ID  и ссылки текущей(выбраной) карточки
+  // Получение ссылки текущей(выбраной) карточки
   getCurrentElement(elem) {
     this._elem = elem;
   }
@@ -104,6 +104,23 @@ export default class Api {
           authorization: this._token
         }
 
+      }).then(response => response.ok
+        ? response.json()
+        : Promise.reject(`Ошибка: ${response.status}`))
+  }
+
+  // 9. Обновление аватара пользователя
+  editAvatarPhoto({ link }) {
+    return fetch(`${this._address}/users/me/avatar`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: this._token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          avatar: link
+        })
       }).then(response => response.ok
         ? response.json()
         : Promise.reject(`Ошибка: ${response.status}`))

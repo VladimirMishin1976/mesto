@@ -18,6 +18,7 @@ export default class Card {
     this._likeData = item['likes']; // данные количества лайков с сервера
     this._id = item['_id'];
     this._idOwnerCard = item.owner['_id'];
+    console.log()
     this._likeOwner = this._likeData.some(element => element._id === this._userId); // Проверка своего лайка
     // Колбеки
     this._handleCardClick = handleCardClick;

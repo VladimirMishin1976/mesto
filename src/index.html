@@ -14,9 +14,12 @@
     </a>
   </header>
   <main class="content">
-    <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>" alt="Аватар пользователя">
 
+    <section class="profile">
+      <div class="profile__avatar-container">
+        <img class="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>" alt="Аватар пользователя">
+        <div class="profile__aratar-pointer"></div>
+      </div>
       <div class="profile__container">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button" aria-label="Закрыть"></button>
@@ -69,6 +72,19 @@
       </label>
       <button class="popup__save" type="submit">Сохранить</button>
       <button class="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
+    </form>
+  </article>
+
+  <!-- Попап - изменить аватар -->
+  <article class="popup popup_place_avatar">
+    <form class="popup__container" name="avatar-photo" novalidate>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <label class="popup__field">
+        <input class="popup__input" type="url" placeholder="Ссылка на картинку" name="link" required>
+        <span class="popup__input-error link-img-place-error"></span>
+      </label>
+      <button class="popup__save" type="submit">Создать</button>
+      <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
     </form>
   </article>
 
