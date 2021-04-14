@@ -10,16 +10,20 @@ export const popupProfile = page.querySelector('.popup_place_profile');
 export const formProfile = document.forms['edit-profile'];
 export const nameInput = formProfile.elements['name'];
 export const jobInput = formProfile.elements['about'];
+export const buttonSubmitProfile = popupProfile.querySelector('.popup__save');
 // профиль кнопка открытия попапа
 export const buttonProfileEdit = page.querySelector('.profile__edit-button');
 // Попап добавления карточки_________________________________________________________________
 export const popupAddCard = page.querySelector('.popup_place_add-card');
-// кнопка добавить карточку
+// кнопка сабмита попапа добавления карточки
+export const buttonSubmitAddCard = popupAddCard.querySelector('.popup__save');
+// кнопка открыть попап = добавить карточку
 export const buttonAddCard = page.querySelector('.profile__add-button');
 // кнопка открыть попап аватара
 export const buttonAvatarEdit = page.querySelector('.profile__aratar-pointer');
 // темплейт попапа редактирования фото аватара
 export const popupAvatarEdit = page.querySelector('.popup_place_avatar');
+export const buttonSubmitAvatarEdit = popupAvatarEdit.querySelector('.popup__save');
 // поле ввода ссылки изображения аватара
 export const popupAvatarInput = document.forms['avatar-photo'].elements['link'];
 

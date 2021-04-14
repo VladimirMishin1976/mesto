@@ -1,8 +1,22 @@
 import './index.css'; // добавьте импорт главного файла стилей
 import {
-  popupProfile, nameInput, jobInput, buttonAvatarEdit, popupAvatarEdit, popupAvatarInput,
-  buttonProfileEdit, popupAddCard, buttonAddCard, selectorsForm, address, token
+  popupProfile,
+  buttonSubmitProfile,
+  nameInput,
+  jobInput,
+  buttonAvatarEdit,
+  popupAvatarEdit,
+  buttonSubmitAvatarEdit,
+  popupAvatarInput,
+  buttonProfileEdit,
+  popupAddCard,
+  buttonAddCard,
+  buttonSubmitAddCard,
+  selectorsForm,
+  address,
+  token,
 } from '../utils/constants.js';
+
 import Api from '../components/Api.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -33,6 +47,7 @@ const cardPhoto = (data) => {
       },
       handleLikeClick: () => { //8. Постановка и снятие лайка
         api.getCurrentElement(card); //  передача ссылки текущей карточки в api
+
         if (card._likeOwner) { // Проверка своего лайка
           api.deleteLike()
             .then(response => {
@@ -100,10 +115,15 @@ const cardList = new Section({
 const formAddCard = new PopupWithForm({
   popupSelector: '.popup_place_add-card',
   handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
+    buttonSubmitAddCard.textContent = 'Сохранение...';
     api.addCard(formData)
       .then(dataCard => { //4. Добавление новой карточки
         cardList.addItem(cardPhoto(dataCard));
-      }).catch(err => console.error(err));
+      }).catch(err => console.error(err))
+      .finally(() => {
+        formAddCard.close();
+        buttonSubmitAddCard.textContent = 'Создать';
+      });
   }
 });
 
@@ -128,9 +148,14 @@ const popupProfileForm = new PopupWithForm(
   {
     popupSelector: '.popup_place_profile',
     handleFormSubmit: (formDataProfile) => { //колбек вызываемый при сабмите - принимает данные всех полей формы.
+      buttonSubmitProfile.textContent = 'Сохранение...';
       api.editUserInfo(formDataProfile) //3. Редактирование профиля
         .then(() => userInfo.setUserInfo(formDataProfile))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => {
+          popupProfileForm.close();
+          buttonSubmitProfile.textContent = 'Сохранить';
+        });
     }
   }
 );
@@ -149,10 +174,15 @@ buttonProfileEdit.addEventListener('click', () => {
 const formAvatarEdit = new PopupWithForm({
   popupSelector: '.popup_place_avatar',
   handleFormSubmit: (formData) => { //handleFormSubmit -  колбэк обработчик сабмита формы - принимает объект данных полей формы
+    buttonSubmitAvatarEdit.textContent = 'Сохранение...';
     api.editAvatarPhoto(formData)
       .then(dataCard => {
         userInfo._userAvatar.src = dataCard.avatar;//formData.link;
-      }).catch(err => console.error(err));
+      }).catch(err => console.error(err))
+      .finally(() => {
+        formAvatarEdit.close();
+        buttonSubmitAvatarEdit.textContent = 'Сохранить';
+      });
   }
 });
 
