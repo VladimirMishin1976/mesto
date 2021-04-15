@@ -1,4 +1,4 @@
-import {userId} from '../pages/index.js';
+import { userId } from '../pages/index.js';
 
 export default class Card {
   // handleCardClick - функция должна открывать попап с картинкой при клике на карточку.
@@ -11,14 +11,14 @@ export default class Card {
     this._captionCard = this._card.querySelector('.card__caption');
     this._likeIcon = this._card.querySelector('.card__like');
     this._trashCard = this._card.querySelector('.card__trash');
-    this._likeCount = this._card.querySelector('.card__like-count');
+    this.likeCount = this._card.querySelector('.card__like-count');
     // Данные элементов карточек
-    this._name = item['name'];
-    this._link = item['link'];
+    this.name = item['name'];
+    this.link = item['link'];
     this._likeData = item['likes']; // данные количества лайков с сервера
     this._id = item['_id'];
     this._idOwnerCard = item.owner['_id'];
-    this._likeOwner = this._likeData.some(element => element._id === userId); // Проверка своего лайка
+    this.likeOwner = this._likeData.some(element => element._id === userId); // Проверка своего лайка
     // Колбеки
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
@@ -26,12 +26,16 @@ export default class Card {
   }
 
   // Реагирование на кнопку лайк
-  _addLike() {
+  addLike(numberLikes) {
     this._likeIcon.classList.add('card__like_choosed');
+    this.likeOwner = true;
+    this.likeCount.textContent = numberLikes;
   }
 
-  _deleteLike() {
+  deleteLike(numberLikes) {
     this._likeIcon.classList.remove('card__like_choosed');
+    this.likeOwner = false;
+    this.likeCount.textContent = numberLikes;
   }
 
   // Корзина
@@ -51,14 +55,14 @@ export default class Card {
       this._trashCard.remove();
     }
 
-    if (this._likeOwner) { // Проверка своего лайка
-      this._addLike();
-    }
+    if (this.likeOwner) { // Проверка своего лайка
+      this.addLike();
+    } else { this.deleteLike(); }
 
-    this._imageCard.alt = this._name;
-    this._imageCard.src = this._link;
-    this._captionCard.textContent = this._name;
-    this._likeCount.textContent = this._likeData.length;
+    this._imageCard.alt = this.name;
+    this._imageCard.src = this.link;
+    this._captionCard.textContent = this.name;
+    this.likeCount.textContent = this._likeData.length;
     this._setEventListeners();
     return this._card;
   }

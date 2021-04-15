@@ -1,13 +1,12 @@
-import { keyClosePopup } from '../utils/constants.js';
-
 export default class Popup { //отвечает за открытие и закрытие попапа
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
+    this._keyClosePopup = 'Escape';
   }
 
   _handleEscClose(evt) { //закрыть попап клавишей Esc
-    if (evt.key === keyClosePopup) {
+    if (evt.key === this._keyClosePopup) {
       this.close();
     }
   }

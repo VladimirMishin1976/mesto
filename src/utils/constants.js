@@ -1,9 +1,6 @@
 // адресс и токен сервера
 export const address = 'https://mesto.nomoreparties.co/v1/cohort-22';
 export const token = '1ffa7dc3-7c04-464d-a554-c3e498742c2a';
-// горячая клавиша закрытия попапа
-export const keyClosePopup = 'Escape';
-
 export const page = document.querySelector('.page');
 // Попап редактирования профиля
 export const popupProfile = page.querySelector('.popup_place_profile');

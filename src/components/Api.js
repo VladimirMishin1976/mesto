@@ -4,16 +4,21 @@ export default class Api {
     this._token = token;
   }
 
+  //  проверка ответа
+  _checkResponse(res) {
+    return res.ok
+      ? res.json()
+      : Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+
   getUserInfo() { //1. Загрузка информации о пользователе с сервера
     return fetch(`${this._address}/users/me`,
       {
         headers: {
           authorization: this._token
         }
-      }).then(response => response.ok
-        ? response.json()
-        : Promise.reject(`Ошибка: ${response.status}`)
-      );
+      }).then(this._checkResponse);
   }
 
   editUserInfo({ name, about }) { //3. Редактирование профиля
@@ -29,9 +34,7 @@ export default class Api {
           about: about
         })
       }
-    ).then(response => response.ok
-      ? response.json()
-      : Promise.reject(`Ошибка: ${response.status}`));
+    ).then(this._checkResponse);
   }
 
   getInitialCards() { //2. Загрузка карточек с сервера
@@ -40,11 +43,7 @@ export default class Api {
         headers: {
           authorization: this._token
         }
-      }
-    ).then(cards => cards.ok
-      ? cards.json()
-      : Promise.reject(`Ошибка: ${response.status}`)
-    );
+      }).then(this._checkResponse);
   }
 
   addCard({ name, link }) {  //4. Добавление новой карточки
@@ -59,52 +58,44 @@ export default class Api {
           name: name,
           link: link
         })
-      }).then(response => response.ok
-        ? response.json()
-        : Promise.reject(`Ошибка: ${response.status}`))
+      }).then(this._checkResponse);
   }
 
   removeCard() {  // 7. Удаление карточки
-    return fetch(`${this._address}/cards/${this._elem._id}`,
+    return fetch(`${this._address}/cards/${this.elem._id}`,
       {
         method: 'DELETE',
         headers: {
           authorization: this._token,
         },
-      }).then(response => response.ok
-        ? Promise.resolve('success')
-        : Promise.reject(`Ошибка: ${response.status}`));
+      }).then(this._checkResponse);
   }
 
   // Получение ссылки текущей(выбраной) карточки
-  getCurrentElement(elem) {
-    this._elem = elem;
+  setCurrentElement(elem) {
+    this.elem = elem;
   }
 
   // 8. Постановка и снятие лайка
   deleteLike() {
-    return fetch(`${this._address}/cards/likes/${this._elem._id}`,
+    return fetch(`${this._address}/cards/likes/${this.elem._id}`,
       {
         method: 'Delete',
         headers: {
           authorization: this._token
         }
-      }).then(response => response.ok
-        ? response.json()
-        : Promise.reject(`Ошибка: ${response.status}`));
+      }).then(this._checkResponse);
   }
 
   putLike() {
-    return fetch(`${this._address}/cards/likes/${this._elem._id}`,
+    return fetch(`${this._address}/cards/likes/${this.elem._id}`,
       {
         method: 'PUT',
         headers: {
           authorization: this._token
         }
 
-      }).then(response => response.ok
-        ? response.json()
-        : Promise.reject(`Ошибка: ${response.status}`))
+      }).then(this._checkResponse);
   }
 
   // 9. Обновление аватара пользователя
@@ -119,9 +110,7 @@ export default class Api {
         body: JSON.stringify({
           avatar: link
         })
-      }).then(response => response.ok
-        ? response.json()
-        : Promise.reject(`Ошибка: ${response.status}`))
+      }).then(this._checkResponse);
   }
 }
 

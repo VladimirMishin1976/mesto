@@ -31,7 +31,7 @@ export default class PopupWithForm extends Popup {
   }
   open() {
     //  событие инпут в полях ввода при открытии формы
-    this._popup.querySelectorAll('.popup__input').forEach(input => input.dispatchEvent(new Event('input')));
+    this._inputList.forEach(input => input.dispatchEvent(new Event('input')));
     super.open();
   }
 }

@@ -62,10 +62,8 @@ export default class FormValidator {
   // Сброс ошибок при открытии формы
   resetError() {
     this._inputList.forEach((inputElement) => {
-      const errorElement = inputElement.closest(this._selectors.labelSelector).querySelector(this._selectors.inputErrorSelector);
-      inputElement.classList.remove(this._selectors.inputTypeErrorClass);
-      errorElement.classList.remove(this._selectors.inputErrorActiveClass);
-      errorElement.textContent = '';
+      this._inputElement = inputElement;
+      this._hideInputError();
     });
   }
 }
