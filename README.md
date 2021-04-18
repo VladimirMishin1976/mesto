@@ -21,5 +21,5 @@
 Работа с github.
 
 ## Ссылка
-https://vladimirmishin1976.github.io/mesto/
+https://vladimirmishin1976.github.io/mesto/index.html
 

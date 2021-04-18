@@ -200,3 +200,4 @@ const formValidatorAvatarEdit = new FormValidator(selectorsForm, popupAvatarEdit
 formValidatorAddCard.enableValidation();
 formValidatorProfile.enableValidation();
 formValidatorAvatarEdit.enableValidation();
+
